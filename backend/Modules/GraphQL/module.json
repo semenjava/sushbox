@@ -1,0 +1,13 @@
+{
+    "name": "GraphQL",
+    "alias": "graphql",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\GraphQL\\Providers\\GraphQLServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
