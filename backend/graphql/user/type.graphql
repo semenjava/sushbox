@@ -18,3 +18,8 @@ type User {
     "When the account was last updated."
     updated_at: DateTime!
 }
+
+type UserSimplePaginator {
+    data: [User]
+    paginatorInfo: SimplePaginatorInfo
+}
