@@ -337,6 +337,7 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
             'Composer\\XdebugHandler\\' => 23,
             'Composer\\Semver\\' => 16,
             'Composer\\Pcre\\' => 14,
+            'Components\\' => 11,
             'Carbon\\' => 7,
         ),
         'B' => 
@@ -902,6 +903,10 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
         array (
             0 => __DIR__ . '/..' . '/composer/pcre/src',
         ),
+        'Components\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Components',
+        ),
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
@@ -1245,6 +1250,10 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
         'Cmgmyr\\PHPLOC\\Log\\Xml' => __DIR__ . '/..' . '/cmgmyr/phploc/src/Log/Xml.php',
         'Cmgmyr\\PHPLOC\\Publisher' => __DIR__ . '/..' . '/cmgmyr/phploc/src/Publisher.php',
         'Cmgmyr\\PHPLOC\\RuntimeException' => __DIR__ . '/..' . '/cmgmyr/phploc/src/Exception/RuntimeException.php',
+        'Components\\Modules\\Actions\\BaseAction' => __DIR__ . '/../..' . '/Components/Modules/Actions/BaseAction.php',
+        'Components\\Modules\\Tasks\\BaseTask' => __DIR__ . '/../..' . '/Components/Modules/Tasks/BaseTask.php',
+        'Components\\Properties\\BaseProperty' => __DIR__ . '/../..' . '/Components/Properties/BaseProperty.php',
+        'Components\\Properties\\Property' => __DIR__ . '/../..' . '/Components/Properties/Property.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Composer\\Pcre\\MatchAllResult' => __DIR__ . '/..' . '/composer/pcre/src/MatchAllResult.php',
         'Composer\\Pcre\\MatchAllStrictGroupsResult' => __DIR__ . '/..' . '/composer/pcre/src/MatchAllStrictGroupsResult.php',
@@ -4807,6 +4816,19 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
         'Modules\\Comment\\Providers\\CommentServiceProvider' => __DIR__ . '/../..' . '/Modules/Comment/Providers/CommentServiceProvider.php',
         'Modules\\Comment\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/Modules/Comment/Providers/EventServiceProvider.php',
         'Modules\\Comment\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/Modules/Comment/Providers/RouteServiceProvider.php',
+        'Modules\\GraphQL\\Console\\Commands\\GraphQLCommand' => __DIR__ . '/../..' . '/Modules/GraphQL/Console/Commands/GraphQLCommand.php',
+        'Modules\\GraphQL\\Http\\Actions\\UsersAction' => __DIR__ . '/../..' . '/Modules/GraphQL/Http/Actions/UsersAction.php',
+        'Modules\\GraphQL\\Http\\Controllers\\Backend\\GraphQLsController' => __DIR__ . '/../..' . '/Modules/GraphQL/Http/Controllers/Backend/GraphQLsController.php',
+        'Modules\\GraphQL\\Http\\Controllers\\Frontend\\GraphQLsController' => __DIR__ . '/../..' . '/Modules/GraphQL/Http/Controllers/Frontend/GraphQLsController.php',
+        'Modules\\GraphQL\\Http\\Middleware\\GenerateMenus' => __DIR__ . '/../..' . '/Modules/GraphQL/Http/Middleware/GenerateMenus.php',
+        'Modules\\GraphQL\\Http\\Queries\\UsersQuery' => __DIR__ . '/../..' . '/Modules/GraphQL/Http/Queries/UsersQuery.php',
+        'Modules\\GraphQL\\Http\\Tasks\\UsersTask' => __DIR__ . '/../..' . '/Modules/GraphQL/Http/Tasks/UsersTask.php',
+        'Modules\\GraphQL\\Models\\GraphQL' => __DIR__ . '/../..' . '/Modules/GraphQL/Models/GraphQL.php',
+        'Modules\\GraphQL\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/Modules/GraphQL/Providers/EventServiceProvider.php',
+        'Modules\\GraphQL\\Providers\\GraphQLServiceProvider' => __DIR__ . '/../..' . '/Modules/GraphQL/Providers/GraphQLServiceProvider.php',
+        'Modules\\GraphQL\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/Modules/GraphQL/Providers/RouteServiceProvider.php',
+        'Modules\\GraphQL\\database\\factories\\GraphQLFactory' => __DIR__ . '/../..' . '/Modules/GraphQL/database/factories/GraphQLFactory.php',
+        'Modules\\GraphQL\\database\\seeders\\GraphQLDatabaseSeeder' => __DIR__ . '/../..' . '/Modules/GraphQL/database/seeders/GraphQLDatabaseSeeder.php',
         'Modules\\Tag\\Database\\Factories\\TagFactory' => __DIR__ . '/../..' . '/Modules/Tag/Database/Factories/TagFactory.php',
         'Modules\\Tag\\Database\\Seeders\\TagDatabaseSeeder' => __DIR__ . '/../..' . '/Modules/Tag/Database/Seeders/TagDatabaseSeeder.php',
         'Modules\\Tag\\Http\\Controllers\\Backend\\TagsController' => __DIR__ . '/../..' . '/Modules/Tag/Http/Controllers/Backend/TagsController.php',

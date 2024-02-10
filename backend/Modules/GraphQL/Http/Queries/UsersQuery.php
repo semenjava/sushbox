@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Queries;
+namespace Modules\GraphQL\Http\Queries;
 
 use Modules\GraphQL\Http\Actions\UsersAction;
 
