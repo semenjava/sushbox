@@ -4,8 +4,8 @@ namespace App\Services\Simplelivepos\Entities;
 
 class Account
 {
-    private $login;
-    private $password;
+    public $login;
+    public $password;
 
     public function __construct()
     {

@@ -146,6 +146,10 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
         array (
             'voku\\' => 5,
         ),
+        'a' => 
+        array (
+            'anlutro\\cURL\\' => 13,
+        ),
         'Z' => 
         array (
             'ZipStream\\' => 10,
@@ -357,6 +361,10 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
         'voku\\' => 
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+        ),
+        'anlutro\\cURL\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/anlutro/curl/src',
         ),
         'ZipStream\\' => 
         array (
@@ -951,6 +959,7 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
     public static $classMap = array (
         'App\\Authorizable' => __DIR__ . '/../..' . '/app/Authorizable.php',
         'App\\Console\\Commands\\AuthPermissionCommand' => __DIR__ . '/../..' . '/app/Console/Commands/AuthPermissionCommand.php',
+        'App\\Console\\Commands\\ImportItemsCategories' => __DIR__ . '/../..' . '/app/Console/Commands/ImportItemsCategories.php',
         'App\\Console\\Commands\\InsertDemoData' => __DIR__ . '/../..' . '/app/Console/Commands/InsertDemoData.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\Auth\\UserLoginSuccess' => __DIR__ . '/../..' . '/app/Events/Auth/UserLoginSuccess.php',
@@ -1029,6 +1038,17 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Services\\Simplelivepos\\Client\\Connect' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Client/Connect.php',
+        'App\\Services\\Simplelivepos\\Client\\CurlRequestTransformer' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Client/CurlRequestTransformer.php',
+        'App\\Services\\Simplelivepos\\Contracts\\ApiEndpoint' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Contracts/ApiEndpoint.php',
+        'App\\Services\\Simplelivepos\\Contracts\\ApiRequest' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Contracts/ApiRequest.php',
+        'App\\Services\\Simplelivepos\\Contracts\\ApiResponce' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Contracts/ApiResponce.php',
+        'App\\Services\\Simplelivepos\\Credential\\AccountSecretCredential' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Credential/AccountSecretCredential.php',
+        'App\\Services\\Simplelivepos\\Endpoint\\GetTokenEndpoint' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Endpoint/GetTokenEndpoint.php',
+        'App\\Services\\Simplelivepos\\Entities\\Account' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Entities/Account.php',
+        'App\\Services\\Simplelivepos\\Facades\\Simple' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Facades/Simple.php',
+        'App\\Services\\Simplelivepos\\Request\\GetTokenRequest' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/Request/GetTokenRequest.php',
+        'App\\Services\\Simplelivepos\\SimpleliveposService' => __DIR__ . '/../..' . '/app/Services/Simplelivepos/SimpleliveposService.php',
         'App\\View\\Components\\AppLayout' => __DIR__ . '/../..' . '/app/View/Components/AppLayout.php',
         'App\\View\\Components\\AuthLayout' => __DIR__ . '/../..' . '/app/View/Components/AuthLayout.php',
         'App\\View\\Components\\GuestLayout' => __DIR__ . '/../..' . '/app/View/Components/GuestLayout.php',
@@ -10838,6 +10858,11 @@ class ComposerStaticInit3fa313bfcae28b8f7cb2b2cdfca51957
         'ZipStream\\Zip64\\ExtendedInformationExtraField' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/Zip64/ExtendedInformationExtraField.php',
         'ZipStream\\ZipStream' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/ZipStream.php',
         'ZipStream\\Zs\\ExtendedInformationExtraField' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/Zs/ExtendedInformationExtraField.php',
+        'anlutro\\cURL\\Laravel\\cURL' => __DIR__ . '/..' . '/anlutro/curl/src/Laravel/cURL.php',
+        'anlutro\\cURL\\Request' => __DIR__ . '/..' . '/anlutro/curl/src/Request.php',
+        'anlutro\\cURL\\Response' => __DIR__ . '/..' . '/anlutro/curl/src/Response.php',
+        'anlutro\\cURL\\cURL' => __DIR__ . '/..' . '/anlutro/curl/src/cURL.php',
+        'anlutro\\cURL\\cURLException' => __DIR__ . '/..' . '/anlutro/curl/src/cURLException.php',
         'voku\\helper\\ASCII' => __DIR__ . '/..' . '/voku/portable-ascii/src/voku/helper/ASCII.php',
         '©' => __DIR__ . '/..' . '/symfony/cache/Traits/ValueWrapper.php',
     );

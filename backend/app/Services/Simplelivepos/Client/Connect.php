@@ -24,8 +24,8 @@ class Connect
         $this->apiUrl = $this->credential->getApiUrl();
     }
 
-    public function connect()
+    public function connect(): AccountSecretCredential
     {
-        
+        return $this->credential;
     }
 }

@@ -4,8 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de7eca0b844efa122a9defa4523366f9",
+    "content-hash": "b76a38be476a4223b078b9541b0e42e0",
     "packages": [
+        {
+            "name": "anlutro/curl",
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anlutro/php-curl.git",
+                "reference": "1c569768a106dd40f5160ebebb703f09c6b58c8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anlutro/php-curl/zipball/1c569768a106dd40f5160ebebb703f09c6b58c8b",
+                "reference": "1c569768a106dd40f5160ebebb703f09c6b58c8b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "anlutro\\cURL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Lutro",
+                    "email": "anlutro@gmail.com"
+                }
+            ],
+            "description": "Simple OOP cURL wrapper.",
+            "support": {
+                "issues": "https://github.com/anlutro/php-curl/issues",
+                "source": "https://github.com/anlutro/php-curl/tree/1.5.2"
+            },
+            "time": "2023-06-27T07:39:41+00:00"
+        },
         {
             "name": "arcanedev/log-viewer",
             "version": "10.0.0",

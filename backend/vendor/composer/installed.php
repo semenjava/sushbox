@@ -5,11 +5,20 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '5778fb9f17baa2f85deb47d5d14ad51f3846937c',
+        'reference' => 'e61180118b8a06431f27379aac19ab63c2ce7ea8',
         'name' => 'nasirkhan/laravel-starter',
         'dev' => true,
     ),
     'versions' => array(
+        'anlutro/curl' => array(
+            'pretty_version' => '1.5.2',
+            'version' => '1.5.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../anlutro/curl',
+            'aliases' => array(),
+            'reference' => '1c569768a106dd40f5160ebebb703f09c6b58c8b',
+            'dev_requirement' => false,
+        ),
         'arcanedev/log-viewer' => array(
             'pretty_version' => '10.0.0',
             'version' => '10.0.0.0',
@@ -754,7 +763,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '5778fb9f17baa2f85deb47d5d14ad51f3846937c',
+            'reference' => 'e61180118b8a06431f27379aac19ab63c2ce7ea8',
             'dev_requirement' => false,
         ),
         'nasirkhan/module-manager' => array(
