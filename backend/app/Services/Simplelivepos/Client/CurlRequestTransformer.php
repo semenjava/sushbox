@@ -7,14 +7,17 @@ use anlutro\cURL\Request;
 use App\Services\Simplelivepos\Contracts\RequestInterface;
 use App\Services\Simplelivepos\Contracts\ResponseInterface;
 use App\Services\Simplelivepos\Contracts\ApiRequest;
+use App\Services\Simplelivepos\Contracts\ApiResponce;
 
 class CurlRequestTransformer
 {
     private $transactionRequest;
+    private $transactionResponse;
 
-    public function __construct(ApiRequest $transactionRequest)
+    public function __construct(ApiRequest $transactionRequest, ApiResponce $transactionResponce)
     {
         $this->transactionRequest = $transactionRequest;
+        $this->transactionResponse = $transactionResponce;
     }
 
     /**
@@ -43,6 +46,6 @@ class CurlRequestTransformer
 
         $response = $curl->sendRequest($request);
 
-        return $transactionRequest->getResponse(\json_decode($response->body, true) ?: array());
+        return $this->transactionResponse->getResponse(\json_decode($response->body, true) ?: array());
     }
 }

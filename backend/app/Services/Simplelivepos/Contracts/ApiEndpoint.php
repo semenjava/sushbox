@@ -20,13 +20,4 @@ abstract class ApiEndpoint
     abstract public function getMethod(): string;
     abstract public function getUrl(): string;
 
-    public function setCredential(AccountSecretCredential $credential)
-    {
-        $this->credential = $credential;
-    }
-
-    public function getCredential()
-    {
-        return $this->credential;
-    }
 }

@@ -6,6 +6,7 @@ use App\Services\Simplelivepos\Entities\Account;
 use App\Services\Simplelivepos\Endpoint\GetTokenEndpoint;
 use App\Models\Simplelivepos;
 use Carbon\Carbon;
+use App\Services\Simplelivepos\Domain\GetTokenDomain;
 
 class AccountSecretCredential
 {
@@ -31,11 +32,13 @@ class AccountSecretCredential
 
     public function getToken()
     {
+        
+
         $ip = request()->ip();
         $this->token = $this->simplelivepos->where('ip', $ip)->where('created_at', '=', Carbon::now())->first();
 
         if(!$this->token) {
-            $this->token = app(GetTokenEndpoint::class)->setCredential($this)->run();
+            $this->token = app(GetTokenDomain::class)->setCredential($this)->run();
             Simplelivepos::updateOrCreate(
                 ['id' => $ip], 
                 ['token' => $this->token] 
