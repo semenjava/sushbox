@@ -1,0 +1,11 @@
+"Account of a person who utilizes this application."
+type Items {
+
+    "Non-unique name."
+    name: String!
+}
+
+type ItemsSimplePaginator {
+    data: [Items]
+    paginatorInfo: SimplePaginatorInfo
+}

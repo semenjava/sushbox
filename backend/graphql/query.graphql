@@ -20,6 +20,8 @@ type Query {
       page: Int
       category: Int
     ): ItemsSimplePaginator @field(resolver: "ItemsQuery")
+
+    categories: Category @field(resolver: "CategoryQuery")
 }
 
 type Mutation {
