@@ -6,17 +6,17 @@ use App\Services\Simplelivepos\Contracts\ApiEndpoint;
 use App\Services\Simplelivepos\Request\GetTokenRequest;
 use TransformerInterfase;
 
-class GetTokenEndpoint extends ApiEndpoint
+class ImportItemsCategoriesEndpoint extends ApiEndpoint
 {
     private $client;
 
     public function getMethod(): string
     {
-        return 'POST';
+        return 'GET';
     }
 
     public function getUrl(): string
     {
-        return $this->getBaseUrl(). '/Account/token';
+        return $this->getBaseUrl(). '/ItemCategories';
     }
 }

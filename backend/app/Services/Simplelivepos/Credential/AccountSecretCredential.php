@@ -32,8 +32,6 @@ class AccountSecretCredential
 
     public function getToken()
     {
-        
-
         $ip = request()->ip();
         $this->token = $this->simplelivepos->where('ip', $ip)->where('created_at', '=', Carbon::now())->first();
 

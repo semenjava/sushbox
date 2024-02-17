@@ -8,7 +8,7 @@ use App\Services\Simplelivepos\Client\CurlRequestTransformer;
 use App\Services\Simplelivepos\Credential\AccountSecretCredential;
 use App\Services\Simplelivepos\Response\GetTokenResponce;
 
-class GetTokenRequest extends ApiRequest
+class ImportItemsCategoriesRequest extends ApiRequest
 {   
     private $credential;
     private $endpoint;
@@ -38,13 +38,8 @@ class GetTokenRequest extends ApiRequest
         return $this->endpoint;
     }
 
-    public function getTransactionData():array
+    public function getTransactionData(): array
     {
-        $secret = $this->getCredential()->getAccount();
-
-        return  [
-            'login' => $secret->login,
-            'password' => $secret->password,
-        ];
+        return  [];
     }
 }

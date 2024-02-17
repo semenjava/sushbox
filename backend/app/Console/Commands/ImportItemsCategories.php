@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\Simplelivepos\Facades\Simple;
 
 class ImportItemsCategories extends Command
 {
@@ -25,6 +26,6 @@ class ImportItemsCategories extends Command
      */
     public function handle()
     {
-        
+        $data = Simple::importItemsCategories();
     }
 }

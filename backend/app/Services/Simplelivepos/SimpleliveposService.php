@@ -18,7 +18,7 @@ class SimpleliveposService
         $credential = app(Connect::class)->connect();
     }
 
-    public function send()
+    public function importItemsCategories()
     {
         
     }

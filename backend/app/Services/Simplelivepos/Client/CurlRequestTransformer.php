@@ -27,6 +27,8 @@ class CurlRequestTransformer
     public function transform()
     {
         $endpoint = $this->transactionRequest->getEndpoint();
+        $credential = $this->transactionRequest->getCredential();
+        $api_token  = $credential->getToken();
 
         $data = $this->transactionRequest->getTransactionData();
 
@@ -45,7 +47,7 @@ class CurlRequestTransformer
             ->setOption(CURLOPT_SSL_VERIFYPEER, env('STAGE') === 'prod');
 
         $response = $curl->sendRequest($request);
-
+dd($response);
         return $this->transactionResponse->getResponse(\json_decode($response->body, true) ?: array());
     }
 }
