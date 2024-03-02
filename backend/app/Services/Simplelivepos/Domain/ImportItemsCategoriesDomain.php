@@ -8,8 +8,10 @@ use App\Services\Simplelivepos\Endpoint\ImportItemsCategoriesEndpoint;
 
 class ImportItemsCategoriesDomain extends ApiDomain
 {
-    public function __construct(ImportItemsCategoriesRequest $request, ImportItemsCategoriesEndpoint $endpoint)
+    public function __construct()
     {
+        $request = new ImportItemsCategoriesRequest;
+        $endpoint = new ImportItemsCategoriesEndpoint($request);
         parent::__construct($request, $endpoint);
         
     }
@@ -28,7 +30,9 @@ class ImportItemsCategoriesDomain extends ApiDomain
 
         $transformer = $request->instaceTransformerInterfase();
 +
-        $transformer->transform();
+        $data = $transformer->transform();
+
+        return $data;
 
     }
 }

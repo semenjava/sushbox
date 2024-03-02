@@ -6,9 +6,9 @@ use App\Services\Simplelivepos\Contracts\ApiResponce;
 
 class ImportItemsCategoriesResponce extends ApiResponce
 {
-    public function getResponce(array $data)
+    public function getResponse($response)
     {
-        dd($data);
+        $data = $this->decodeResponse($response);
         return $data;
     }
 }

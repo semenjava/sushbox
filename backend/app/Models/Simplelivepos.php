@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 
-class Simplelivepos extends BaseModel
+class Simplelivepos extends Model
 {
     use SoftDeletes;
 
@@ -15,7 +16,18 @@ class Simplelivepos extends BaseModel
         'ip',
         'token',
         'status',
+        'companyId',
+        'data'
     ];
 
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function getCompanyId() 
+    {
+        return $this->companyId;
+    }
 
 }

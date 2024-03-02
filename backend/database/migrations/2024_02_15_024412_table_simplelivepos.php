@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('simplelivepos', function (Blueprint $table) {
             $table->id();
             $table->string('ip');
-            $table->string('token');
+            $table->text('token');
+            $table->string('companyId');
+            $table->json('data');
             $table->tinyInteger('status')->default(1)->unsigned();
             $table->timestamps();
             $table->softDeletes();

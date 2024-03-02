@@ -19,4 +19,24 @@ class GetTokenEndpoint extends ApiEndpoint
     {
         return $this->getBaseUrl(). '/Account/token';
     }
+
+    public function getMethodCompany(): string
+    {
+        return 'GET';
+    }
+
+    public function getCompanyUrl(): string
+    {
+        return $this->getBaseUrl(). '/Account/userCompanies';
+    }
+
+    public function getMethodLogin(): string
+    {
+        return 'GET';
+    }
+
+    public function getLoginUrl($companyId): string
+    {
+        return $this->getBaseUrl(). '/Account/loginWithCompany/'.$companyId;
+    }
 }

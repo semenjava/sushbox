@@ -38,8 +38,8 @@ class ImportItemsCategoriesRequest extends ApiRequest
         return $this->endpoint;
     }
 
-    public function getTransactionData(): array
+    public function getTransactionData(): ?array
     {
-        return  [];
+        return [];
     }
 }

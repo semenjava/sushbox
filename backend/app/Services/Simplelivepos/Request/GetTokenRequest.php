@@ -4,7 +4,7 @@ namespace App\Services\Simplelivepos\Request;
 
 use App\Services\Simplelivepos\Contracts\ApiRequest;
 use App\Services\Simplelivepos\Contracts\ApiEndpoint;
-use App\Services\Simplelivepos\Client\CurlRequestTransformer;
+use App\Services\Simplelivepos\Client\CurlRequestTokenTransformer;
 use App\Services\Simplelivepos\Credential\AccountSecretCredential;
 use App\Services\Simplelivepos\Response\GetTokenResponce;
 
@@ -15,7 +15,7 @@ class GetTokenRequest extends ApiRequest
 
     public function instaceTransformerInterfase()
     {
-        return new CurlRequestTransformer($this, new GetTokenResponce);
+        return new CurlRequestTokenTransformer($this, new GetTokenResponce);
     }
 
     public function setCredential(AccountSecretCredential $credential): void
@@ -45,6 +45,7 @@ class GetTokenRequest extends ApiRequest
         return  [
             'login' => $secret->login,
             'password' => $secret->password,
+            'rememberMe' => true
         ];
     }
 }

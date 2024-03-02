@@ -11,6 +11,8 @@ class Connect
     private $account;
     private $credential;
     private $apiUrl;
+    private $token;
+    private $companyId;
 
     public function __construct() 
     {
@@ -22,6 +24,8 @@ class Connect
     {
         $this->account = $this->credential->getAccount();
         $this->apiUrl = $this->credential->getApiUrl();
+        $this->token = $this->credential->getToken();
+        $this->companyId = $this->credential->getCompanyId();
     }
 
     public function connect(): AccountSecretCredential

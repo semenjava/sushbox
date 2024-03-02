@@ -8,7 +8,6 @@ use TransformerInterfase;
 
 class ImportItemsCategoriesEndpoint extends ApiEndpoint
 {
-    private $client;
 
     public function getMethod(): string
     {

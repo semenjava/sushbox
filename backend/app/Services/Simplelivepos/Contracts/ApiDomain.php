@@ -6,7 +6,7 @@ use App\Services\Simplelivepos\Credential\AccountSecretCredential;
 use App\Services\Simplelivepos\Contracts\ApiRequest;
 use App\Services\Simplelivepos\Contracts\ApiEndpoint;
 
-abstract class ApiDomain
+class ApiDomain
 {
     public ApiRequest $request;
     public AccountSecretCredential $credential;
@@ -21,6 +21,7 @@ abstract class ApiDomain
     public function setCredential(AccountSecretCredential $credential)
     {
         $this->credential = $credential;
+        return $this;
     }
 
     public function getCredential()

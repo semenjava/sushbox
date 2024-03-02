@@ -8,8 +8,10 @@ use App\Services\Simplelivepos\Endpoint\GetTokenEndpoint;
 
 class GetTokenDomain extends ApiDomain
 {
-    public function __construct(GetTokenRequest $request, GetTokenEndpoint $endpoint)
+    public function __construct()
     {
+        $request = new GetTokenRequest;
+        $endpoint = new GetTokenEndpoint($request);
         parent::__construct($request, $endpoint);
         
     }
@@ -28,7 +30,9 @@ class GetTokenDomain extends ApiDomain
 
         $transformer = $request->instaceTransformerInterfase();
 
-        $transformer->transform();
+        $token = $transformer->transform();
+
+        return $token;
 
     }
 }

@@ -28,7 +28,9 @@ class CurlRequestTransformer
     {
         $endpoint = $this->transactionRequest->getEndpoint();
         $credential = $this->transactionRequest->getCredential();
+
         $api_token  = $credential->getToken();
+        $companyId  = $credential->getCompanyId();
 
         $data = $this->transactionRequest->getTransactionData();
 
@@ -44,10 +46,14 @@ class CurlRequestTransformer
             ->setHeader('Accept-Encoding', 'gzip, deflate, br')
             ->setHeader('Connection', 'keep-alive')
             ->setHeader('Authorization', 'Bearer ' . $api_token)
-            ->setOption(CURLOPT_SSL_VERIFYPEER, env('STAGE') === 'prod');
+            ->setHeader('Cache-Control', 'no-cache,no-store')
+            ->setHeader('Pragma', 'no-cache')
+            ->setHeader('Expires', '-1')
+            ->setHeader('Server', 'Microsoft-IIS/10.0')
+            ->setHeader('X-Powered-By', 'ASP.NET');
 
         $response = $curl->sendRequest($request);
 dd($response);
-        return $this->transactionResponse->getResponse(\json_decode($response->body, true) ?: array());
+        return $this->transactionResponse->getResponse($response);
     }
 }
