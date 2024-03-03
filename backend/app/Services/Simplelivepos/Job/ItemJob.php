@@ -20,6 +20,7 @@ class ItemJob
 
     public function run()
     {
+		$this->item->uid = $this->data['id'];
         $this->item->bar_code = $this->data['barCode'];
 		$this->item->name = $this->data['name'];
 		$this->item->name_en = $this->data['name'];

@@ -1,0 +1,10 @@
+"Account of a person who utilizes this application."
+type OrderStatus {
+	status: String!
+	mesage: String!
+	redirect_paymets: String!
+}
+
+type Order {
+	status: Bool
+}

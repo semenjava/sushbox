@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
 			$table->int('category_id');
-            $table->string('code');
+			$table->string('uid');
+            $table->string('code')->nullable();
 			$table->string('bar_code')->nullable();
             
             $table->string('name')->nullable();

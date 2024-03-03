@@ -1,5 +1,6 @@
 "Account of a person who utilizes this application."
 type Item {
+	uid: String!
 	category_id: Int!
 	code: String!
 	bar_code: String

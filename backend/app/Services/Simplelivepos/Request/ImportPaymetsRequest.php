@@ -6,16 +6,16 @@ use App\Services\Simplelivepos\Contracts\ApiRequest;
 use App\Services\Simplelivepos\Contracts\ApiEndpoint;
 use App\Services\Simplelivepos\Client\CurlRequestTransformer;
 use App\Services\Simplelivepos\Credential\AccountSecretCredential;
-use App\Services\Simplelivepos\Response\ImportItemsCategoriesResponce;
+use App\Services\Simplelivepos\Response\ImportPaymetsResponce;
 
-class ImportItemsCategoriesRequest extends ApiRequest
+class ImportPaymetsRequest extends ApiRequest
 {   
     private $credential;
     private $endpoint;
 
     public function instaceTransformerInterfase()
     {
-        return new CurlRequestTransformer($this, new ImportItemsCategoriesResponce);
+        return new CurlRequestTransformer($this, new ImportPaymetsResponce);
     }
 
     public function setCredential(AccountSecretCredential $credential): void

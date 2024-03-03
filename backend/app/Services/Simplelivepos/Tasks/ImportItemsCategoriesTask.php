@@ -58,7 +58,7 @@ class ImportItemsCategoriesTask
 			
 			foreach($this->data['parentCategory']['items'] as $itm) {
 				$item = Items::firstOrNew(
-					['code' =>  $itm['code'], 'category_id' => $category->id]
+					['uid' =>  $itm['id'], 'category_id' => $category->id]
 				);
 				
 				(new ItemJob($itm, $category, $item))->run();

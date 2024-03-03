@@ -6,16 +6,17 @@ use App\Services\Simplelivepos\Contracts\ApiRequest;
 use App\Services\Simplelivepos\Contracts\ApiEndpoint;
 use App\Services\Simplelivepos\Client\CurlRequestTransformer;
 use App\Services\Simplelivepos\Credential\AccountSecretCredential;
-use App\Services\Simplelivepos\Response\ImportItemsCategoriesResponce;
+use App\Services\Simplelivepos\Response\OrderStatusResponce;
 
-class ImportItemsCategoriesRequest extends ApiRequest
+class OrderStatusRequest extends ApiRequest
 {   
     private $credential;
     private $endpoint;
+	private $data;
 
     public function instaceTransformerInterfase()
     {
-        return new CurlRequestTransformer($this, new ImportItemsCategoriesResponce);
+        return new CurlRequestTransformer($this, new OrderStatusResponce);
     }
 
     public function setCredential(AccountSecretCredential $credential): void
@@ -40,6 +41,12 @@ class ImportItemsCategoriesRequest extends ApiRequest
 
     public function getTransactionData(): ?array
     {
-        return [];
+        return $this->data;
     }
+
+	public function setData(array $data)
+	{
+		$this->data = $data;
+	}
+
 }
