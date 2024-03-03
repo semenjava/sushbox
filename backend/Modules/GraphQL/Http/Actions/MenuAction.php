@@ -3,9 +3,9 @@
 namespace Modules\GraphQL\Http\Actions;
 
 use Components\Modules\Actions\BaseAction;
-use Modules\GraphQL\Http\Tasks\CategoriesTask;
+use Modules\GraphQL\Http\Tasks\MenusTask;
 
-class CateoryAction extends BaseAction
+class MenuAction extends BaseAction
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,9 @@ class CateoryAction extends BaseAction
      */
     public function run()
     {
-        $categories = app(CategoriesTask::class)->setDto($this->dto)->run();
-        return $categories->orderBy('position');
+        $menus = app(MenusTask::class)->setDto($this->dto)->run();
+
+        return $menus->orderBy('position');
     }
 
 }
