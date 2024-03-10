@@ -3,5 +3,6 @@
     "Tag": true,
     "Comment": true,
     "Category": true,
-    "GraphQL": true
+    "GraphQL": true,
+	"Product": true
 }

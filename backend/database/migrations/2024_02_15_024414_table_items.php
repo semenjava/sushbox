@@ -53,6 +53,8 @@ return new class extends Migration
 			$table->json('item_prices')->nullable();
 			$table->json('combo_detail_items')->nullable();
 			
+			$table->json('create_admin')->default(0);
+			
             $table->timestamps();
             $table->softDeletes();
         });
