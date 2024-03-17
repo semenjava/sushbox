@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'e61180118b8a06431f27379aac19ab63c2ce7ea8',
+        'reference' => NULL,
         'name' => 'nasirkhan/laravel-starter',
         'dev' => true,
     ),
@@ -758,12 +758,12 @@
             'dev_requirement' => true,
         ),
         'nasirkhan/laravel-starter' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'e61180118b8a06431f27379aac19ab63c2ce7ea8',
+            'reference' => NULL,
             'dev_requirement' => false,
         ),
         'nasirkhan/module-manager' => array(
