@@ -52,13 +52,13 @@
                                 #
                             </th>
                             <th>
-                                @lang("category::text.name")
+                                @lang("product::text.name")
                             </th>
                             <th>
-                                @lang("category::text.updated_at")
+                                @lang("product::text.updated_at")
                             </th>
                             <th class="text-end">
-                                @lang("category::text.action")
+                                @lang("product::text.action")
                             </th>
                         </tr>
                     </thead>

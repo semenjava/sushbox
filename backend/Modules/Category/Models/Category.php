@@ -2,32 +2,29 @@
 
 namespace Modules\Category\Models;
 
-use App\Models\BaseModel;
+use App\Models\HomeModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 
-class Category extends BaseModel
+class Category extends HomeModel
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'categories';
+    protected $table = 'category';
 
-    /**
-     * Caegories has Many posts.
-     */
-    public function posts()
-    {
-        return $this->hasMany('Modules\Article\Models\Post');
-    }
+    protected $fillable = [
+        'parent_id',
+        'code',
+        'name',
+        'name_en',
+        'image',
+        'is_product_category',
+        'is_ingredient_category',
+        'is_preparation_category',
+        'show_preferences',
+        'position',
+    ];
 
-    /**
-     * Create a new factory instance for the model.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    protected static function newFactory()
-    {
-        return \Modules\Category\database\factories\CategoryFactory::new();
-    }
 }

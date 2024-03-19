@@ -22,7 +22,7 @@ return new class extends Migration
 			$table->tinyInteger('is_ingredient_category')->default(0);
 			$table->tinyInteger('is_preparation_category')->default(0);
 			$table->tinyInteger('show_preferences')->default(0);
-			$table->int('position')->default(0);
+			$table->integer('position')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

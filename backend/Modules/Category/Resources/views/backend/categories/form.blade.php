@@ -1,3 +1,5 @@
+@inject('categoryService', 'App\Services\CategoryService')
+
 <div class="row mb-3">
     <div class="col-12 col-sm-4">
         <div class="form-group">
@@ -14,7 +16,7 @@
     <div class="col-12 col-sm-4">
         <div class="form-group">
             <?php
-            $field_name = 'slug';
+            $field_name = 'name_en';
             $field_lable = label_case($field_name);
             $field_placeholder = $field_lable;
             $required = "";
@@ -26,13 +28,53 @@
     <div class="col-12 col-sm-4">
         <div class="form-group">
             <?php
-            $field_name = 'group_name';
+            $field_name = 'code';
             $field_lable = label_case($field_name);
             $field_placeholder = $field_lable;
-            $required = "";
+            $required = "required";
             ?>
             {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! fielf_required($required) !!}
             {{ html()->text($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
+        </div>
+    </div>
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            <?php
+            $field_name = 'parent_id';
+            $field_label = label_case($field_name);
+            $field_placeholder = $field_label;
+            $required = "";
+            ?>
+            {{ html()->label($field_label, $field_name)->class('form-label') }} {!! fielf_required($required) !!}
+            {{ html()->select('parent_id')->placeholder(__('Select Category'))->options($categoryService->getCategories())->value($data->parent_id ?? '')->class('form-control') }}
+        </div>
+    </div>
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            {{ html()->label('Is Product Category')->class('form-label') }}
+            <br>
+            {{ html()->checkbox('is_product_category', $value = 1, $checked = false)->class('form-check-input') }}
+        </div>
+    </div>
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            {{ html()->label('Is Ingredient Category')->class('form-label') }}
+            <br>
+            {{ html()->checkbox('is_ingredient_category', $value = 1, $checked = false)->class('form-check-input') }}
+        </div>
+    </div>
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            {{ html()->label('Is Preparation Category')->class('form-label') }}
+            <br>
+            {{ html()->checkbox('is_preparation_category', $value = 1, $checked = false)->class('form-check-input') }}
+        </div>
+    </div>
+    <div class="col-12 col-sm-4">
+        <div class="form-group">
+            {{ html()->label('Show Preferences')->class('form-label') }}
+            <br>
+            {{ html()->checkbox('show_preferences', $value = 1, $checked = false)->class('form-check-input') }}
         </div>
     </div>
 </div>
@@ -125,21 +167,33 @@
 </div>
 
 <div class="row mb-3">
+    {{-- <div class="col-12 col-sm-4">
+        <div class="form-group">
+            <?php
+            // $field_name = 'status';
+            // $field_lable = label_case($field_name);
+            // $field_placeholder = "-- Select an option --";
+            // $required = "required";
+            // $select_options = [
+            //     'Active' => 'Active',
+            //     'Inactive' => 'Inactive',
+            //     'Draft' => 'Draft'
+            // ];
+            ?>
+            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! fielf_required($required) !!}
+            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->value($data->status ?? null)->class('form-select')->attributes(["$required"]) }}
+        </div>
+    </div> --}}
     <div class="col-12 col-sm-4">
         <div class="form-group">
             <?php
-            $field_name = 'status';
-            $field_lable = label_case($field_name);
-            $field_placeholder = "-- Select an option --";
-            $required = "required";
-            $select_options = [
-                'Active' => 'Active',
-                'Inactive' => 'Inactive',
-                'Draft' => 'Draft'
-            ];
+            $field_name = 'position';
+            $field_label = label_case($field_name);
+            $field_placeholder = $field_label;
+            $required = "";
             ?>
-            {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! fielf_required($required) !!}
-            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-select')->attributes(["$required"]) }}
+            {{ html()->label($field_label, $field_name)->class('form-label') }} {!! fielf_required($required) !!}
+            {{ html()->number($field_name)->placeholder($field_placeholder)->class('form-control')->attributes(["$required"]) }}
         </div>
     </div>
 </div>

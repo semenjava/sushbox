@@ -1,5 +1,5 @@
 {
-    "name": "nasirkhan/category",
+    "name": "nasirkhan/product",
     "description": "",
     "type": "laravel-module",
     "authors": [
@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Category\\": ""
+            "Modules\\Product\\": ""
         }
     }
 }

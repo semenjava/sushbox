@@ -47,10 +47,20 @@ class CategoriesController extends BackendBaseController
 
         $validatedData = $request->validate([
             'name' => 'required|max:191|unique:'.$module_model.',name',
-            'slug' => 'nullable|max:191|unique:'.$module_model.',slug',
+            'code' => 'required|max:191|unique:'.$module_model.',code',
+            'is_product_category' => 'nullable|boolean',
+            'is_ingredient_category' => 'nullable|boolean',
+            'is_preparation_category' => 'nullable|boolean',
+            'show_preferences' => 'nullable|boolean',
         ]);
 
-        $$module_name_singular = $module_model::create($request->except('image'));
+        $data = $request->except(['image', '_token']);
+        $data['is_product_category'] = $request->has('is_product_category') ? 1 : 0;
+        $data['is_ingredient_category'] = $request->has('is_ingredient_category') ? 1 : 0;
+        $data['is_preparation_category'] = $request->has('is_preparation_category') ? 1 : 0;
+        $data['show_preferences'] = $request->has('show_preferences') ? 1 : 0;
+
+        $$module_name_singular = $module_model::create($data);
 
         if ($request->image) {
             $media = $$module_name_singular->addMedia($request->file('image'))->toMediaCollection($module_name);
@@ -84,13 +94,11 @@ class CategoriesController extends BackendBaseController
 
         $$module_name_singular = $module_model::findOrFail($id);
 
-        $posts = $$module_name_singular->posts()->latest()->paginate();
-
         logUserAccess($module_title.' '.$module_action.' | Id: '.$$module_name_singular->id);
 
         return view(
             "{$module_path}.{$module_name}.show",
-            compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_name_singular', 'module_action', "{$module_name_singular}", 'posts')
+            compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_name_singular', 'module_action', "{$module_name_singular}")
         );
     }
 
@@ -113,12 +121,22 @@ class CategoriesController extends BackendBaseController
 
         $validatedData = $request->validate([
             'name' => 'required|max:191|unique:'.$module_model.',name,'.$id,
-            'slug' => 'nullable|max:191|unique:'.$module_model.',slug,'.$id,
+            'code' => 'nullable|max:191|unique:'.$module_model.',code,'.$id,
+            'is_product_category' => 'nullable|boolean',
+            'is_ingredient_category' => 'nullable|boolean',
+            'is_preparation_category' => 'nullable|boolean',
+            'show_preferences' => 'nullable|boolean',
         ]);
 
         $$module_name_singular = $module_model::findOrFail($id);
 
-        $$module_name_singular->update($request->except('image', 'image_remove'));
+        $data = $request->except('image', 'image_remove', '_token');
+        $data['is_product_category'] = $request->has('is_product_category') ? 1 : 0;
+        $data['is_ingredient_category'] = $request->has('is_ingredient_category') ? 1 : 0;
+        $data['is_preparation_category'] = $request->has('is_preparation_category') ? 1 : 0;
+        $data['show_preferences'] = $request->has('show_preferences') ? 1 : 0;
+
+        $$module_name_singular->update($data);
 
         // Image
         if ($request->hasFile('image')) {

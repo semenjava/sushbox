@@ -4,7 +4,7 @@ namespace Modules\Product\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class CategoryCommand extends Command
+class ProductCommand extends Command
 {
     /**
      * The name and signature of the console command.
