@@ -1,11 +1,11 @@
 {
-    "name": "Category",
-    "alias": "category",
+    "name": "Product",
+    "alias": "product",
     "description": "",
     "keywords": [],
     "priority": 0,
     "providers": [
-        "Modules\\Category\\Providers\\CategoryServiceProvider"
+        "Modules\\Product\\Providers\\ProductServiceProvider"
     ],
     "aliases": {},
     "files": [],

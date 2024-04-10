@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Category\database\seeders;
+namespace Modules\Product\database\seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Modules\Tag\Models\Category;
+use Modules\Tag\Models\Product;
 
-class CategoryDatabaseSeeder extends Seeder
+class ProductDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,8 +26,8 @@ class CategoryDatabaseSeeder extends Seeder
         // DB::table('categories')->truncate();
         // echo "Truncate: categories \n";
 
-        Category::factory()->count(20)->create();
-        $rows = Category::all();
+        Product::factory()->count(20)->create();
+        $rows = Product::all();
         echo " Insert: categories \n\n";
 
         // Enable foreign key checks!

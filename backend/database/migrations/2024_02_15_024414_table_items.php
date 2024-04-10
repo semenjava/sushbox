@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-			$table->int('category_id');
+			$table->integer('category_id');
 			$table->string('uid');
             $table->string('code')->nullable();
 			$table->string('bar_code')->nullable();
@@ -24,18 +24,18 @@ return new class extends Migration
 			$table->string('image')->nullable();
 			$table->string('item_image')->nullable();
 			$table->string('item_thumbnail')->nullable();
-			$table->int('warning')->default(0);
-			$table->int('pack')->default(0);
-			$table->int('optimal_quantity')->default(0);
+			$table->integer('warning')->default(0);
+			$table->integer('pack')->default(0);
+			$table->integer('optimal_quantity')->default(0);
 			
 			$table->decimal('take_out_price', 9, 3)->nullable();
 			$table->decimal('delivery_price', 9, 3)->nullable();
 			$table->decimal('last_purchase_price', 9, 3)->nullable();
 			$table->decimal('price', 9, 3)->nullable();
 			
-			$table->int('position')->default(0);
-			$table->int('cook_time')->default(0);
-			$table->int('color')->default(0);
+			$table->integer('position')->default(0);
+			$table->integer('cook_time')->default(0);
+			$table->integer('color')->default(0);
 			
 			$table->tinyInteger('is_enabled')->default(0);
 			$table->tinyInteger('has_weight')->default(0);
@@ -53,7 +53,7 @@ return new class extends Migration
 			$table->json('item_prices')->nullable();
 			$table->json('combo_detail_items')->nullable();
 			
-			$table->json('create_admin')->default(0);
+			$table->json('create_admin')->nullable();
 			
             $table->timestamps();
             $table->softDeletes();

@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('menu', function (Blueprint $table) {
             $table->id();
-			$table->int('category_id');
+			$table->integer('category_id');
 			$table->string('code');
 			$table->string('bar_code')->nullable();
             $table->string('name')->nullable();
 			$table->string('name_en')->nullable();
 			$table->string('comments')->nullable();
 			$table->string('image')->nullable();
-			$table->int('position')->default(0);
+			$table->integer('position')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

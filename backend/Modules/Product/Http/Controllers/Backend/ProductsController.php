@@ -17,7 +17,7 @@ class ProductsController extends BackendBaseController
         $this->module_title = 'Product';
 
         // module name
-        $this->module_name = 'product';
+        $this->module_name = 'products';
 
         // directory path of the module
         $this->module_path = 'product::backend';

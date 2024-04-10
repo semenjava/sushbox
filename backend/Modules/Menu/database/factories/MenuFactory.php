@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Category\database\factories;
+namespace Modules\Menu\database\factories;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class CategoryFactory extends Factory
+class MenuFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = \Modules\Category\Models\Category::class;
+    protected $model = \Modules\Menu\Models\Menu::class;
 
     /**
      * Define the model's default state.

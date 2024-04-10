@@ -51,6 +51,11 @@ class PermissionRoleTableSeeder extends Seeder
         echo "\n _Categories_ Permissions Created.";
 
         Artisan::call('auth:permission', [
+            'name' => 'products',
+        ]);
+        echo "\n _Products_ Permissions Created.";
+
+        Artisan::call('auth:permission', [
             'name' => 'tags',
         ]);
         echo "\n _Tags_ Permissions Created.";
