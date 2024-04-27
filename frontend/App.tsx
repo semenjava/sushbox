@@ -2,117 +2,96 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
+ * Generated with the TypeScript template
+ * https://github.com/react-native-community/react-native-template-typescript
+ *
  * @format
  */
 
+import 'react-native-gesture-handler';
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import {AppState, AppStateStatus} from 'react-native';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
+  AppearanceProvider,
   useColorScheme,
-  View,
-} from 'react-native';
+  ColorSchemeName,
+} from 'react-native-appearance';
+import RootNavigation from '@src/components/routes/RootNavigation';
+import CartProvider from '@src/components/common/CartProvider';
+import ThemeContext from '@src/context/theme-context';
+import AuthProvider from '@src/components/common/AuthProvider/AuthProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AppReviewConfig} from '@src/constants';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const {USES_UNTIL_SHOW} = AppReviewConfig;
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+const App = () => {
+  const appState = React.useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = React.useState(
+    appState.current,
   );
-}
+  const scheme = useColorScheme();
+  const [currentTheme, setCurrentTheme] = React.useState('dark');
+  const [useSystemTheme, setUseSystemTheme] = React.useState(false);
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  React.useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
+  }, []);
+
+  const _handleAppStateChange = (nextAppState: AppStateStatus) => {
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
   };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+  React.useEffect(() => {
+    if (appStateVisible !== 'active') {
+      return;
+    }
+    const handleGetUsesUntilShowAppReview = async () => {
+      const usesUntilShowAppReview = await AsyncStorage.getItem(
+        USES_UNTIL_SHOW,
+      );
+      if (!usesUntilShowAppReview) {
+        AsyncStorage.setItem(USES_UNTIL_SHOW, '1');
+        return;
+      }
+      const totalUses = parseInt(usesUntilShowAppReview, 10) + 1;
+      AsyncStorage.setItem(USES_UNTIL_SHOW, totalUses.toString());
+    };
+    handleGetUsesUntilShowAppReview();
+  }, [appStateVisible]);
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  React.useEffect(() => {
+    if (useSystemTheme) {
+      setCurrentTheme(scheme);
+    }
+  }, [scheme, useSystemTheme]);
+
+  const _setTheme = React.useCallback((theme: ColorSchemeName) => {
+    setCurrentTheme(theme);
+  }, []);
+
+  return (
+    <AppearanceProvider>
+      <ThemeContext.Provider
+        value={{
+          theme: currentTheme,
+          useSystemTheme,
+          setTheme: _setTheme,
+          setUseSystemTheme,
+        }}>
+        <AuthProvider>
+          <CartProvider>
+            <RootNavigation />
+          </CartProvider>
+        </AuthProvider>
+      </ThemeContext.Provider>
+    </AppearanceProvider>
+  );
+};
 
 export default App;
