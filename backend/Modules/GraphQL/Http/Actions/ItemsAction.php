@@ -13,20 +13,20 @@ class ItemsAction extends BaseAction
      */
     public function run()
     {
-        $items = app(ItemsTask::class)->setDto($this->dto)->run();
+        return app(ItemsTask::class)->setDto($this->dto)->run();
 
-        $data = $items->items();
-        return [
-            'data' => $data,
-            'paginatorInfo' => [
-                'count' => $items->count(),
-                'currentPage' => $items->currentPage(),
-                'firstItem' => $items->firstItem(),
-                'lastItem' => $items->lastItem(),
-                'perPage' => $items->perPage(),
-                'hasMorePages' => $items->hasMorePages(),
-            ]
-        ];
+        // $data = $items->items();
+        // return [
+        //     'data' => $data,
+        //     'paginatorInfo' => [
+        //         'count' => $items->count(),
+        //         'currentPage' => $items->currentPage(),
+        //         'firstItem' => $items->firstItem(),
+        //         'lastItem' => $items->lastItem(),
+        //         'perPage' => $items->perPage(),
+        //         'hasMorePages' => $items->hasMorePages(),
+        //     ]
+        // ];
     }
 
 }

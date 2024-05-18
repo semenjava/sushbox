@@ -13,7 +13,7 @@ type Query {
     ): Items @field(resolver: "ItemsQuery")
 
     categories: Category @field(resolver: "CategoryQuery")
-	menus: Menu @field(resolver: "MenuQuery")
+	  menus: Menu @field(resolver: "MenuQuery")
 }
 
 type Mutation {
