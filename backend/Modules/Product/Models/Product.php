@@ -9,5 +9,7 @@ use App\Models\Items;
 
 class Product extends Items
 {
-    
+        use HasFactory;
+        
+
 }

@@ -213,8 +213,8 @@
             ?>
             {{ html()->label($field_lable, $field_name) }} {!! fielf_required($required) !!}
             {{ html()->multiselect($field_name,
-                !empty($data)?optional($data->$field_relation)->pluck('name', 'id'):'',
-                !empty($data)?optional($data->$field_relation)->pluck('id')->toArray():''
+                !empty($data->$field_relation)?optional($data->$field_relation)->pluck('name', 'id'):'',
+                !empty($data->$field_relation)?optional($data->$field_relation)->pluck('id')->toArray():''
                 )->class('form-control select-items')->attributes(["$required"]) }}
         </div>
     </div>

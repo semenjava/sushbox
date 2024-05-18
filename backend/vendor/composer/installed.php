@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => '5a786852219525473c966a568861008f00a6fbe2',
         'name' => 'nasirkhan/laravel-starter',
         'dev' => true,
     ),
@@ -209,12 +209,12 @@
             ),
         ),
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.8.0',
-            'version' => '7.8.0.0',
+            'pretty_version' => '7.8.1',
+            'version' => '7.8.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => '1110f66a6530a40fe7aea0378fe608ee2b2248f9',
+            'reference' => '41042bc7ab002487b876a0683fc8dce04ddce104',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
@@ -758,12 +758,12 @@
             'dev_requirement' => true,
         ),
         'nasirkhan/laravel-starter' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => '5a786852219525473c966a568861008f00a6fbe2',
             'dev_requirement' => false,
         ),
         'nasirkhan/module-manager' => array(
