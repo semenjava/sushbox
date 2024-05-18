@@ -13,7 +13,8 @@ class ItemsAction extends BaseAction
      */
     public function run()
     {
-        return app(ItemsTask::class)->setDto($this->dto)->run();
+        $items = app(ItemsTask::class)->setDto($this->dto)->run();
+        return $items->orderBy('position');
 
         // $data = $items->items();
         // return [
