@@ -16,6 +16,12 @@ class OrderItems extends Model
 	
 	public function order()
     {
-        return $this->hasOne('App\Models\Order');
+        return $this->belongsTo('App\Models\Order', 'order_uid', 'uuid');
     }
+
+    public function item()
+    {
+        return $this->belongsTo('App\Models\Items', 'item_uid', 'uuid');
+    }
+
 }

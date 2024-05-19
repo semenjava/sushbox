@@ -14,6 +14,10 @@ type Query {
 
     categories: Category @field(resolver: "CategoryQuery")
 	  menus: Menu @field(resolver: "MenuQuery")
+
+    cart(order_uuid: String!) Cart @field(resolver: "CartQuery")
+
+    payments: PaymtesList @field(resolver: "PaymentsQuery")
 }
 
 type Mutation {

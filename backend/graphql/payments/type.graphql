@@ -1,0 +1,14 @@
+"Account of a person who utilizes this application."
+type Payment {
+	uid: String!
+	name: String!
+	redirect: String!
+	amount: String!
+	description: String
+}
+
+type PaymtesList {
+	uid: String!
+	name: String!
+	price: String!
+}

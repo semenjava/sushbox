@@ -4,7 +4,7 @@ type Item {
 	category_id: Int!
 	code: String!
 	bar_code: String
-    name: String!
+    	name: String!
 	name_en: String
 	comments: String
 	image: String

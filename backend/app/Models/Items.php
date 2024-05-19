@@ -19,4 +19,8 @@ class Items extends HomeModel
         return $this->belongsTo(Category::class);
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany('App\Models\OrderItems', 'item_uid', 'uuid');
+    }
 }

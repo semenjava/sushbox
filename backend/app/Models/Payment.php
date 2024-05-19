@@ -26,4 +26,9 @@ class Payment extends Model
         'description',
 		'redirect'
     ];
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order', 'payment_uid', 'uuid');
+    }
 }
