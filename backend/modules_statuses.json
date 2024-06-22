@@ -4,6 +4,7 @@
     "Comment": true,
     "Category": true,
     "GraphQL": true,
-	"Product": true,
-    "Menu": true
+    "Product": true,
+    "Menu": true,
+    "Slider": true
 }
