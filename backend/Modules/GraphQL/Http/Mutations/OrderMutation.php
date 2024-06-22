@@ -2,7 +2,7 @@
 
 namespace App\GraphQL\Mutations;
 
-use Modules\Products\Http\Actions\OrderAction;
+use Modules\GraphQL\Http\Actions\OrderAction;
 
 final class OrderMutation
 {

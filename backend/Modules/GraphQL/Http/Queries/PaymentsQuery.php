@@ -2,7 +2,7 @@
 
 namespace Modules\GraphQL\Http\Queries;
 
-use Modules\GraphQL\Http\Actions\CartAction;
+use Modules\GraphQL\Http\Actions\PaymentsAction;
 
 final class PaymentsQuery
 {
@@ -12,6 +12,6 @@ final class PaymentsQuery
      */
     public function __invoke($_, array $args)
     {
-        return app(CartAction::class)->setDto($args)->run();
+        return app(PaymentsAction::class)->setDto($args)->run();
     }
 }

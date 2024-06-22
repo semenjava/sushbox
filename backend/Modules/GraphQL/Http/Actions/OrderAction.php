@@ -16,7 +16,7 @@ class OrderAction extends BaseAction
         $order = app(OrderTask::class)->setDto($this->dto)->run();
         return [
 			'order_uid' => $order['order_uid']
-			'status' => $order['status'],
+			'status' => $order['status'] ?? '',
 			'mesage' => $order['mesage'] ?? '',
 			'redirect_paymets' = $order['redirect_paymets'] ?? '',
 		];

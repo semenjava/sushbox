@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,10 @@ require __DIR__.'/auth.php';
 Route::get('language/{language}', [LanguageController::class, 'switch'])->name('language.switch');
 
 Route::get('dashboard', 'App\Http\Controllers\Frontend\FrontendController@index')->name('dashboard');
+
+Route::post('/payment', [PaymentController::class, 'createPayment'])->name('payment.create');
+Route::get('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
+
 /*
 *
 * Frontend Routes
