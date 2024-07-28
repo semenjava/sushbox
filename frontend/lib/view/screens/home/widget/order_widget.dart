@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:resturant_delivery_boy/data/model/response/order_model.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/provider/localization_provider.dart';
-import 'package:resturant_delivery_boy/utill/dimensions.dart';
-import 'package:resturant_delivery_boy/utill/images.dart';
-import 'package:resturant_delivery_boy/utill/styles.dart';
-import 'package:resturant_delivery_boy/view/base/custom_button.dart';
-import 'package:resturant_delivery_boy/view/screens/order/order_details_screen.dart';
+import 'package:sushibox/data/model/response/order_model.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/provider/localization_provider.dart';
+import 'package:sushibox/utill/dimensions.dart';
+import 'package:sushibox/utill/images.dart';
+import 'package:sushibox/utill/styles.dart';
+import 'package:sushibox/view/base/custom_button.dart';
+import 'package:sushibox/view/screens/order/order_details_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class OrderWidget extends StatelessWidget {
   final OrderModel? orderModel;
   final int index;
-  const OrderWidget({Key? key, this.orderModel, required this.index}) : super(key: key);
+  const OrderWidget({Key? key, this.orderModel, required this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,13 @@ class OrderWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
       decoration: BoxDecoration(
-          boxShadow: [BoxShadow(color: Theme.of(context).shadowColor.withOpacity(.5), spreadRadius: 1, blurRadius: 1, offset: const Offset(0, 1))],
+          boxShadow: [
+            BoxShadow(
+                color: Theme.of(context).shadowColor.withOpacity(.5),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: const Offset(0, 1))
+          ],
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
       child: Column(
@@ -34,31 +41,41 @@ class OrderWidget extends StatelessWidget {
                 children: [
                   Text(
                     getTranslated('order_id', context)!,
-                    style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color),
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                   Text(
                     ' # ${orderModel!.id.toString()}',
-                    style: Theme.of(context).textTheme.displaySmall!.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color),
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                        color: Theme.of(context).textTheme.bodyLarge!.color),
                   ),
                 ],
               ),
               Stack(
-                clipBehavior: Clip.none, children: [
+                clipBehavior: Clip.none,
+                children: [
                   Container(),
                   Provider.of<LocalizationProvider>(context).isLtr
                       ? Positioned(
                           right: -10,
                           top: -23,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: Dimensions.fontSizeLarge, horizontal: Dimensions.paddingSizeDefault),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: Dimensions.fontSizeLarge,
+                                horizontal: Dimensions.paddingSizeDefault),
                             decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColor,
                                 borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(Dimensions.paddingSizeSmall),
-                                    bottomLeft: Radius.circular(Dimensions.paddingSizeSmall))),
+                                    topRight: Radius.circular(
+                                        Dimensions.paddingSizeSmall),
+                                    bottomLeft: Radius.circular(
+                                        Dimensions.paddingSizeSmall))),
                             child: Text(
-                              getTranslated('${orderModel!.orderStatus}', context)!,
-                              style: rubikRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                              getTranslated(
+                                  '${orderModel!.orderStatus}', context)!,
+                              style: rubikRegular.copyWith(
+                                  fontSize: Dimensions.fontSizeSmall,
+                                  color: Theme.of(context).cardColor),
                             ),
                           ),
                         )
@@ -66,15 +83,22 @@ class OrderWidget extends StatelessWidget {
                           left: -10,
                           top: -28,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: Dimensions.fontSizeLarge, horizontal: Dimensions.paddingSizeDefault),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: Dimensions.fontSizeLarge,
+                                horizontal: Dimensions.paddingSizeDefault),
                             decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColor,
                                 borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(Dimensions.paddingSizeSmall),
-                                    bottomLeft: Radius.circular(Dimensions.paddingSizeSmall))),
+                                    topRight: Radius.circular(
+                                        Dimensions.paddingSizeSmall),
+                                    bottomLeft: Radius.circular(
+                                        Dimensions.paddingSizeSmall))),
                             child: Text(
-                              getTranslated('${orderModel!.orderStatus}', context)!,
-                              style: rubikRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).cardColor),
+                              getTranslated(
+                                  '${orderModel!.orderStatus}', context)!,
+                              style: rubikRegular.copyWith(
+                                  fontSize: Dimensions.fontSizeSmall,
+                                  color: Theme.of(context).cardColor),
                             ),
                           ),
                         )
@@ -85,12 +109,18 @@ class OrderWidget extends StatelessWidget {
           const SizedBox(height: 25),
           Row(
             children: [
-              Image.asset(Images.location, color: Theme.of(context).textTheme.bodyLarge!.color, width: 15, height: 20),
+              Image.asset(Images.location,
+                  color: Theme.of(context).textTheme.bodyLarge!.color,
+                  width: 15,
+                  height: 20),
               const SizedBox(width: 10),
               Expanded(
                   child: Text(
-                orderModel!.deliveryAddress != null ? orderModel!.deliveryAddress!.address! : 'Address not found',
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color),
+                orderModel!.deliveryAddress != null
+                    ? orderModel!.deliveryAddress!.address!
+                    : 'Address not found',
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    color: Theme.of(context).textTheme.bodyLarge!.color),
               )),
             ],
           ),
@@ -101,7 +131,9 @@ class OrderWidget extends StatelessWidget {
                   child: CustomButton(
                 btnTxt: getTranslated('view_details', context),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => OrderDetailsScreen(orderModelItem: orderModel)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) =>
+                          OrderDetailsScreen(orderModelItem: orderModel)));
                 },
                 isShowBorder: true,
               )),
@@ -110,10 +142,11 @@ class OrderWidget extends StatelessWidget {
                   child: CustomButton(
                       btnTxt: getTranslated('direction', context),
                       onTap: () async {
-                        String url ='https://www.google.com/maps/dir/?api=1&destination=${orderModel!.deliveryAddress!.latitude
-                        },${orderModel!.deliveryAddress!.longitude}&mode=d';
+                        String url =
+                            'https://www.google.com/maps/dir/?api=1&destination=${orderModel!.deliveryAddress!.latitude},${orderModel!.deliveryAddress!.longitude}&mode=d';
                         if (await canLaunchUrlString(url)) {
-                          await launchUrlString(url, mode: LaunchMode.externalApplication);
+                          await launchUrlString(url,
+                              mode: LaunchMode.externalApplication);
                         } else {
                           throw '${'could_not_launch'} $url';
                         }
@@ -129,11 +162,17 @@ class OrderWidget extends StatelessWidget {
 class MapUtils {
   MapUtils._();
 
-  static Future<void> openMap(double destinationLatitude, double destinationLongitude, double userLatitude, double userLongitude) async {
-    String googleUrl = 'https://www.google.com/maps/dir/?api=1&origin=$userLatitude,$userLongitude'
+  static Future<void> openMap(
+      double destinationLatitude,
+      double destinationLongitude,
+      double userLatitude,
+      double userLongitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/dir/?api=1&origin=$userLatitude,$userLongitude'
         '&destination=$destinationLatitude,$destinationLongitude&mode=d';
     if (await canLaunchUrl(Uri.parse(googleUrl))) {
-      await launchUrl(Uri.parse(googleUrl), mode: LaunchMode.externalApplication);
+      await launchUrl(Uri.parse(googleUrl),
+          mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not open the map.';
     }

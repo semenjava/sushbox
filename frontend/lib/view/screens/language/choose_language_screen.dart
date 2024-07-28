@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/data/model/response/language_model.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/provider/language_provider.dart';
-import 'package:resturant_delivery_boy/provider/localization_provider.dart';
-import 'package:resturant_delivery_boy/utill/app_constants.dart';
-import 'package:resturant_delivery_boy/utill/dimensions.dart';
-import 'package:resturant_delivery_boy/utill/images.dart';
-import 'package:resturant_delivery_boy/view/base/custom_button.dart';
-import 'package:resturant_delivery_boy/view/base/custom_snackbar.dart';
-import 'package:resturant_delivery_boy/view/screens/auth/login_screen.dart';
-import 'package:resturant_delivery_boy/view/screens/language/widget/search_widget.dart';
+import 'package:sushibox/data/model/response/language_model.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/provider/language_provider.dart';
+import 'package:sushibox/provider/localization_provider.dart';
+import 'package:sushibox/utill/app_constants.dart';
+import 'package:sushibox/utill/dimensions.dart';
+import 'package:sushibox/utill/images.dart';
+import 'package:sushibox/view/base/custom_button.dart';
+import 'package:sushibox/view/base/custom_snackbar.dart';
+import 'package:sushibox/view/screens/auth/login_screen.dart';
+import 'package:sushibox/view/screens/language/widget/search_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChooseLanguageScreen extends StatelessWidget {

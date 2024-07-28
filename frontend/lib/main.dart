@@ -5,20 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:resturant_delivery_boy/helper/notification_helper.dart';
-import 'package:resturant_delivery_boy/provider/chat_provider.dart';
-import 'package:resturant_delivery_boy/utill/app_constants.dart';
-import 'package:resturant_delivery_boy/localization/app_localization.dart';
-import 'package:resturant_delivery_boy/provider/auth_provider.dart';
-import 'package:resturant_delivery_boy/provider/localization_provider.dart';
-import 'package:resturant_delivery_boy/provider/language_provider.dart';
-import 'package:resturant_delivery_boy/provider/order_provider.dart';
-import 'package:resturant_delivery_boy/provider/profile_provider.dart';
-import 'package:resturant_delivery_boy/provider/splash_provider.dart';
-import 'package:resturant_delivery_boy/provider/theme_provider.dart';
-import 'package:resturant_delivery_boy/provider/tracker_provider.dart';
-import 'package:resturant_delivery_boy/theme/dark_theme.dart';
-import 'package:resturant_delivery_boy/view/screens/splash/splash_screen.dart';
+import 'package:sushibox/helper/notification_helper.dart';
+import 'package:sushibox/provider/chat_provider.dart';
+import 'package:sushibox/utill/app_constants.dart';
+import 'package:sushibox/localization/app_localization.dart';
+import 'package:sushibox/provider/auth_provider.dart';
+import 'package:sushibox/provider/localization_provider.dart';
+import 'package:sushibox/provider/language_provider.dart';
+import 'package:sushibox/provider/order_provider.dart';
+import 'package:sushibox/provider/profile_provider.dart';
+import 'package:sushibox/provider/splash_provider.dart';
+import 'package:sushibox/provider/theme_provider.dart';
+import 'package:sushibox/provider/tracker_provider.dart';
+import 'package:sushibox/provider/banner_provider.dart';
+import 'package:sushibox/provider/home_provider.dart';
+import 'package:sushibox/provider/products_latest_provider.dart';
+import 'package:sushibox/provider/product_provider.dart';
+import 'package:sushibox/provider/cart_provider.dart';
+import 'package:sushibox/theme/dark_theme.dart';
+import 'package:sushibox/view/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'di_container.dart' as di;
 import 'provider/time_provider.dart';
@@ -37,7 +42,9 @@ Future<void> main() async {
       Permission.notification.request();
     }
   });
+
   await di.init();
+
   await NotificationHelper.initialize(flutterLocalNotificationsPlugin);
   if (defaultTargetPlatform == TargetPlatform.android) {
     channel = const AndroidNotificationChannel(
@@ -64,6 +71,12 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<TrackerProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<TimerProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<BannerProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<HomeProvider>()),
+      ChangeNotifierProvider(
+          create: (context) => di.sl<ProductsLatestProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<CartProvider>()),
     ],
     child: const MyApp(),
   ));

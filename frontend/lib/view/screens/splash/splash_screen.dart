@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/provider/localization_provider.dart';
-import 'package:resturant_delivery_boy/utill/app_constants.dart';
-import 'package:resturant_delivery_boy/utill/styles.dart';
-import 'package:resturant_delivery_boy/provider/auth_provider.dart';
-import 'package:resturant_delivery_boy/provider/splash_provider.dart';
-import 'package:resturant_delivery_boy/utill/images.dart';
-import 'package:resturant_delivery_boy/view/screens/auth/login_screen.dart';
-import 'package:resturant_delivery_boy/view/screens/dashboard/dashboard_screen.dart';
-import 'package:resturant_delivery_boy/view/screens/language/choose_language_screen.dart';
+import 'package:sushibox/provider/localization_provider.dart';
+import 'package:sushibox/utill/app_constants.dart';
+import 'package:sushibox/utill/styles.dart';
+import 'package:sushibox/provider/auth_provider.dart';
+import 'package:sushibox/provider/splash_provider.dart';
+import 'package:sushibox/utill/images.dart';
+import 'package:sushibox/view/screens/auth/login_screen.dart';
+import 'package:sushibox/view/screens/dashboard/dashboard_screen.dart';
+import 'package:sushibox/view/screens/language/choose_language_screen.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {

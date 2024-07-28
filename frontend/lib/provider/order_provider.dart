@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/api_response.dart';
-import 'package:resturant_delivery_boy/data/model/response/order_details_model.dart';
-import 'package:resturant_delivery_boy/data/model/response/order_model.dart';
-import 'package:resturant_delivery_boy/data/repository/order_repo.dart';
-import 'package:resturant_delivery_boy/data/repository/response_model.dart';
-import 'package:resturant_delivery_boy/helper/api_checker.dart';
+import 'package:sushibox/data/model/response/base/api_response.dart';
+import 'package:sushibox/data/model/response/order_details_model.dart';
+import 'package:sushibox/data/model/response/order_model.dart';
+import 'package:sushibox/data/repository/order_repo.dart';
+import 'package:sushibox/data/repository/response_model.dart';
+import 'package:sushibox/helper/api_checker.dart';
 
 class OrderProvider with ChangeNotifier {
   final OrderRepo? orderRepo;

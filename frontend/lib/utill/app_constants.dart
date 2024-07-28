@@ -1,5 +1,5 @@
-import 'package:resturant_delivery_boy/data/model/response/language_model.dart';
-import 'package:resturant_delivery_boy/utill/images.dart';
+import 'package:sushibox/data/model/response/language_model.dart';
+import 'package:sushibox/utill/images.dart';
 
 class AppConstants {
   static const String appName = '';
@@ -7,6 +7,10 @@ class AppConstants {
   static const String baseUrl = 'http://10.0.2.2:8000';
   static const String profileUri = '/api/v1/delivery-man/profile?token=';
   static const String configUri = '/api/v1/config';
+  static const String bannerUri = '/api/v1/banners';
+  static const String searchUri = '/api/v1/products/searched';
+  static const String categoryUri = '/api/v1/categories/list';
+  static const String productsLatestUri = '/api/v1/products/latested';
   static const String loginUri = '/api/v1/auth/delivery-man/login';
   static const String notificationUri = '/api/v1/notifications';
   static const String updateProfileUri = '/api/v1/customer/update-profile';
@@ -16,6 +20,7 @@ class AppConstants {
       '/api/v1/delivery-man/order-details?token=';
   static const String orderHistoryUri =
       '/api/v1/delivery-man/all-orders?token=';
+  static const String productListUri = '/api/v1/products/list/';
   static const String recordLocationUri =
       '/api/v1/delivery-man/record-location-data';
   static const String updateOrderStatusUri =
@@ -39,6 +44,7 @@ class AppConstants {
   static const String userPassword = 'user_password';
   static const String userEmail = 'user_email';
   static const String orderId = 'order_id';
+  static const String imageFolder = '/storage/';
 
   static List<LanguageModel> languages = [
     LanguageModel(

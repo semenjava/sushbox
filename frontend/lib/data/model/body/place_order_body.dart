@@ -1,4 +1,4 @@
-import 'package:resturant_delivery_boy/data/model/response/product_model.dart';
+import 'package:sushibox/data/model/response/product_model.dart';
 
 class PlaceOrderBody {
   List<Cart>? _cart;
@@ -9,10 +9,10 @@ class PlaceOrderBody {
 
   PlaceOrderBody(
       {List<Cart>? cart,
-        double? couponDiscountAmount,
-        String? couponDiscountTitle,
-        double? orderAmount,
-        int? deliveryAddressId}) {
+      double? couponDiscountAmount,
+      String? couponDiscountTitle,
+      double? orderAmount,
+      int? deliveryAddressId}) {
     _cart = cart;
     _couponDiscountAmount = couponDiscountAmount;
     _couponDiscountTitle = couponDiscountTitle;
@@ -64,13 +64,13 @@ class Cart {
 
   Cart(
       String productId,
-        String price,
-        String variant,
-        List<Variation> variation,
-        double discountAmount,
-        int quantity,
-        double taxAmount,
-        List<int> addOnIds) {
+      String price,
+      String variant,
+      List<Variation> variation,
+      double discountAmount,
+      int quantity,
+      double taxAmount,
+      List<int> addOnIds) {
     _productId = productId;
     _price = price;
     _variant = variant;

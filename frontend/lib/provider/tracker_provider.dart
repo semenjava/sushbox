@@ -5,11 +5,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:resturant_delivery_boy/data/model/response/response_model.dart';
-import 'package:resturant_delivery_boy/data/model/body/track_body.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/api_response.dart';
-import 'package:resturant_delivery_boy/data/repository/tracker_repo.dart';
-import 'package:resturant_delivery_boy/helper/api_checker.dart';
+import 'package:sushibox/data/model/response/response_model.dart';
+import 'package:sushibox/data/model/body/track_body.dart';
+import 'package:sushibox/data/model/response/base/api_response.dart';
+import 'package:sushibox/data/repository/tracker_repo.dart';
+import 'package:sushibox/helper/api_checker.dart';
 
 class TrackerProvider extends ChangeNotifier {
   final TrackerRepo? trackerRepo;
@@ -31,7 +31,7 @@ class TrackerProvider extends ChangeNotifier {
   void startLocationService() async {
     _startTrack = true;
     addTrack();
-    if(_timer != null) {
+    if (_timer != null) {
       _timer!.cancel();
       _timer = null;
     }
@@ -42,7 +42,7 @@ class TrackerProvider extends ChangeNotifier {
 
   void stopLocationService() {
     _startTrack = false;
-    if(_timer != null) {
+    if (_timer != null) {
       _timer!.cancel();
       _timer = null;
     }
@@ -55,15 +55,20 @@ class TrackerProvider extends ChangeNotifier {
       Geolocator.getCurrentPosition().then((location) async {
         String locationText = 'demo';
         try {
-          List<Placemark> placeMark = await placemarkFromCoordinates(location.latitude, location.longitude);
+          List<Placemark> placeMark = await placemarkFromCoordinates(
+              location.latitude, location.longitude);
           Placemark address = placeMark.first;
-          locationText = '${address.name ?? ''}, ${address.subAdministrativeArea ?? ''}, ${address.isoCountryCode ?? ''}';
-        }catch(e) {}
-        ApiResponse apiResponse = await trackerRepo!.addTrack(location.latitude, location.longitude, locationText);
-        if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+          locationText =
+              '${address.name ?? ''}, ${address.subAdministrativeArea ?? ''}, ${address.isoCountryCode ?? ''}';
+        } catch (e) {}
+        ApiResponse apiResponse = await trackerRepo!
+            .addTrack(location.latitude, location.longitude, locationText);
+        if (apiResponse.response != null &&
+            apiResponse.response!.statusCode == 200) {
           responseModel = ResponseModel(true, 'Successfully start track');
         } else {
-          responseModel = ResponseModel(false, ApiChecker.getError(apiResponse).errors![0].message);
+          responseModel = ResponseModel(
+              false, ApiChecker.getError(apiResponse).errors![0].message);
         }
       });
     } else {

@@ -2,19 +2,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:resturant_delivery_boy/data/datasource/remote/dio/dio_client.dart';
-import 'package:resturant_delivery_boy/data/model/body/delivery_man_body.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/api_response.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/error_response.dart';
-import 'package:resturant_delivery_boy/data/model/response/config_model.dart';
-import 'package:resturant_delivery_boy/data/repository/auth_repo.dart';
-import 'package:resturant_delivery_boy/data/repository/response_model.dart';
-import 'package:resturant_delivery_boy/helper/api_checker.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/main.dart';
-import 'package:resturant_delivery_boy/view/base/custom_snackbar.dart';
+import 'package:sushibox/data/datasource/remote/dio/dio_client.dart';
+import 'package:sushibox/data/model/body/delivery_man_body.dart';
+import 'package:sushibox/data/model/response/base/api_response.dart';
+import 'package:sushibox/data/model/response/base/error_response.dart';
+import 'package:sushibox/data/model/response/config_model.dart';
+import 'package:sushibox/data/repository/auth_repo.dart';
+import 'package:sushibox/data/repository/response_model.dart';
+import 'package:sushibox/helper/api_checker.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/main.dart';
+import 'package:sushibox/view/base/custom_snackbar.dart';
 import 'package:http/http.dart' as http;
-
 
 import 'splash_provider.dart';
 
@@ -34,7 +33,12 @@ class AuthProvider with ChangeNotifier {
 
   XFile? _pickedImage;
   List<XFile> _pickedIdentities = [];
-  final List<String> _identityTypeList = ['passport', 'driving_license', 'nid', 'restaurant_id'];
+  final List<String> _identityTypeList = [
+    'passport',
+    'driving_license',
+    'nid',
+    'restaurant_id'
+  ];
   int _identityTypeIndex = 0;
   final int _dmTypeIndex = 0;
   XFile? _pickedLogo;
@@ -56,10 +60,12 @@ class AuthProvider with ChangeNotifier {
     _isLoading = true;
     _loginErrorMessage = '';
     notifyListeners();
-    ApiResponse apiResponse = await authRepo!.login(emailAddress: emailAddress, password: password);
+    ApiResponse apiResponse =
+        await authRepo!.login(emailAddress: emailAddress, password: password);
 
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
       Map map = apiResponse.response!.data;
       String token = map["token"];
       authRepo!.saveUserToken(token);
@@ -75,8 +81,9 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> updateToken() async {
-    ApiResponse apiResponse = await   authRepo!.updateToken();
-    if(apiResponse.response?.statusCode == null || apiResponse.response!.statusCode! != 200) {
+    ApiResponse apiResponse = await authRepo!.updateToken();
+    if (apiResponse.response?.statusCode == null ||
+        apiResponse.response!.statusCode! != 200) {
       ApiChecker.checkApi(apiResponse);
     }
   }
@@ -138,24 +145,28 @@ class AuthProvider with ChangeNotifier {
     return authRepo!.getUserToken();
   }
 
-
-  void loadBranchList(){
+  void loadBranchList() {
     _branchList = [];
 
     _branchList?.add(Branches(id: 0, name: getTranslated('all', Get.context!)));
-    _branchList?.addAll(Provider.of<SplashProvider>(Get.context!, listen: false).configModel?.branches ?? []);
+    _branchList?.addAll(Provider.of<SplashProvider>(Get.context!, listen: false)
+            .configModel
+            ?.branches ??
+        []);
   }
 
   void pickDmImage(bool isLogo, bool isRemove) async {
-    if(isRemove) {
+    if (isRemove) {
       _pickedImage = null;
       _pickedIdentities = [];
-    }else {
+    } else {
       if (isLogo) {
-        _pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+        _pickedImage =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
       } else {
-        XFile? xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-        if(xFile != null) {
+        XFile? xFile =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (xFile != null) {
           _pickedIdentities.add(xFile);
         }
       }
@@ -165,19 +176,17 @@ class AuthProvider with ChangeNotifier {
 
   void setIdentityTypeIndex(String? identityType, bool notify) {
     int index0 = 0;
-    for(int index=0; index<_identityTypeList.length; index++) {
-      if(_identityTypeList[index] == identityType) {
+    for (int index = 0; index < _identityTypeList.length; index++) {
+      if (_identityTypeList[index] == identityType) {
         index0 = index;
         break;
       }
     }
     _identityTypeIndex = index0;
-    if(notify) {
+    if (notify) {
       notifyListeners();
     }
   }
-
-
 
   void removeIdentityImage(int index) {
     _pickedIdentities.removeAt(index);
@@ -189,18 +198,24 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     List<MultipartBody> multiParts = [];
     multiParts.add(MultipartBody('image', _pickedImage));
-    for(XFile file in _pickedIdentities) {
+    for (XFile file in _pickedIdentities) {
       multiParts.add(MultipartBody('identity_image[]', file));
     }
-    http.Response ? apiResponse = await authRepo?.registerDeliveryMan(deliveryManBody, multiParts);
-    if (apiResponse != null  && apiResponse.statusCode == 200) {
+    http.Response? apiResponse =
+        await authRepo?.registerDeliveryMan(deliveryManBody, multiParts);
+    if (apiResponse != null && apiResponse.statusCode == 200) {
       Navigator.of(Get.context!).pop();
-      showCustomSnackBar(getTranslated('delivery_man_registration_successful', Get.context!)!, isError: false);
+      showCustomSnackBar(
+          getTranslated('delivery_man_registration_successful', Get.context!)!,
+          isError: false);
     } else {
       dynamic errorResponse;
-      try{
-        errorResponse = ErrorResponse.fromJson(jsonDecode(apiResponse!.body.toString())).errors![0].message;
-      }catch(er){
+      try {
+        errorResponse =
+            ErrorResponse.fromJson(jsonDecode(apiResponse!.body.toString()))
+                .errors![0]
+                .message;
+      } catch (er) {
         errorResponse = apiResponse?.body;
       }
       showCustomSnackBar(errorResponse);
@@ -209,9 +224,9 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setBranchIndex(int index, {bool isUpdate = true}){
+  void setBranchIndex(int index, {bool isUpdate = true}) {
     _selectedBranchIndex = index;
-    if(isUpdate){
+    if (isUpdate) {
       notifyListeners();
     }
   }

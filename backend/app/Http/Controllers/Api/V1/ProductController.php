@@ -21,6 +21,18 @@ class ProductController extends Controller
         private Review      $review
     ){}
 
+    public function get_latest_products_front(Request $request): JsonResponse
+    {
+        //update daily stock
+        Helpers::update_daily_product_stock();
+
+        // $request['category_ids'] = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+        $products = ProductLogic::get_latested_products($request['limit'], $request['offset'], $request['product_type'], $request['name'], $request['category_ids']);
+        $products['products'] = Helpers::product_data_formatting($products['products'], true);
+        return response()->json($products, 200);
+    }
+
     /**
      * @param Request $request
      * @return JsonResponse
@@ -46,6 +58,56 @@ class ProductController extends Controller
         return response()->json($products, 200);
     }
 
+    public function get_search_products(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+        $product_type = $request['product_type'];
+        $products = ProductLogic::searched_products($request['name'], $request['limit'], $request['offset'], $product_type);
+
+        if ($product_type != 'veg' && $product_type != 'non_veg') {
+            $product_type = 'all';
+        }
+
+        if (count($products['products']) == 0) {
+            $key = explode(' ', $request['name']);
+            $ids = $this->translation
+                ->where(['key' => 'name'])
+                ->where(function ($query) use ($key) {
+                    foreach ($key as $value) {
+                        $query->orWhere('value', 'like', "%{$value}%");
+                    }
+                })
+                ->pluck('translationable_id')
+                ->toArray();
+
+            $paginator = $this->product
+                ->active()
+                ->whereIn('id', $ids)
+                ->withCount(['wishlist'])
+                ->with(['rating'])
+                ->when(isset($product_type) && ($product_type != 'all'), function ($query) use ($product_type) {
+                    return $query->productType(($product_type == 'veg') ? 'veg' : 'non_veg');
+                })
+                ->paginate($request['limit'], ['*'], 'page', $request['offset']);
+
+            $products = [
+                'total_size' => $paginator->total(),
+                'limit' => $request['limit'],
+                'offset' => $request['offset'],
+                'products' => $paginator->items()
+            ];
+        }
+
+        $products['products'] = Helpers::product_data_formatting($products['products'], true);
+        return response()->json($products, 200);
+    }
+
     /**
      * @param Request $request
      * @return JsonResponse
@@ -61,6 +123,92 @@ class ProductController extends Controller
         }
         $product_type = $request['product_type'];
         $products = ProductLogic::search_products($request['name'], $request['limit'], $request['offset'], $product_type);
+
+        if ($product_type != 'veg' && $product_type != 'non_veg') {
+            $product_type = 'all';
+        }
+
+        if (count($products['products']) == 0) {
+            $key = explode(' ', $request['name']);
+            $ids = $this->translation
+                ->where(['key' => 'name'])
+                ->where(function ($query) use ($key) {
+                    foreach ($key as $value) {
+                        $query->orWhere('value', 'like', "%{$value}%");
+                    }
+                })
+                ->pluck('translationable_id')
+                ->toArray();
+
+            $paginator = $this->product
+                ->active()
+                ->whereIn('id', $ids)
+                ->withCount(['wishlist'])
+                ->with(['rating'])
+                ->when(isset($product_type) && ($product_type != 'all'), function ($query) use ($product_type) {
+                    return $query->productType(($product_type == 'veg') ? 'veg' : 'non_veg');
+                })
+                ->paginate($request['limit'], ['*'], 'page', $request['offset']);
+
+            $products = [
+                'total_size' => $paginator->total(),
+                'limit' => $request['limit'],
+                'offset' => $request['offset'],
+                'products' => $paginator->items()
+            ];
+        }
+
+        $products['products'] = Helpers::product_data_formatting($products['products'], true);
+        return response()->json($products, 200);
+    }
+
+    public function get_products_list($category_id, Request $request): JsonResponse
+    {
+        $product_type = $request['product_type'];
+        $products = ProductLogic::get_products_list([$category_id], $request['limit'], $request['offset'], $product_type);
+
+        if ($product_type != 'veg' && $product_type != 'non_veg') {
+            $product_type = 'all';
+        }
+
+        if (count($products['products']) == 0) {
+            $key = explode(' ', $request['name']);
+            $ids = $this->translation
+                ->where(['key' => 'name'])
+                ->where(function ($query) use ($key) {
+                    foreach ($key as $value) {
+                        $query->orWhere('value', 'like', "%{$value}%");
+                    }
+                })
+                ->pluck('translationable_id')
+                ->toArray();
+
+            $paginator = $this->product
+                ->active()
+                ->whereIn('id', $ids)
+                ->withCount(['wishlist'])
+                ->with(['rating'])
+                ->when(isset($product_type) && ($product_type != 'all'), function ($query) use ($product_type) {
+                    return $query->productType(($product_type == 'veg') ? 'veg' : 'non_veg');
+                })
+                ->paginate($request['limit'], ['*'], 'page', $request['offset']);
+
+            $products = [
+                'total_size' => $paginator->total(),
+                'limit' => $request['limit'],
+                'offset' => $request['offset'],
+                'products' => $paginator->items()
+            ];
+        }
+
+        $products['products'] = Helpers::product_data_formatting($products['products'], true);
+        return response()->json($products, 200);
+    }
+
+    public function get_products(Request $request): JsonResponse
+    {
+        $product_type = $request['product_type'];
+        $products = ProductLogic::get_products($request['limit'], $request['offset'], $product_type);
 
         if ($product_type != 'veg' && $product_type != 'non_veg') {
             $product_type = 'all';

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/view/screens/home/home_screen.dart';
-import 'package:resturant_delivery_boy/view/screens/order/order_history_screen.dart';
-import 'package:resturant_delivery_boy/view/screens/profile/profile_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/view/screens/home/home_screen.dart';
+import 'package:sushibox/view/screens/order/order_history_screen.dart';
+import 'package:sushibox/view/screens/profile/profile_screen.dart';
+import 'package:sushibox/view/screens/product/product_list_screen.dart';
+import 'package:sushibox/view/screens/category/category_list_screen.dart'; // Импорт CategoryListScreen
+import 'package:sushibox/provider/home_provider.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -24,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     _screens = [
       HomeScreen(),
-      OrderHistoryScreen(),
+      CategoryListScreen(),
       const ProfileScreen(),
     ];
   }
@@ -50,7 +54,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           type: BottomNavigationBarType.fixed,
           items: [
             _barItem(Icons.home, getTranslated('home', context), 0),
-            _barItem(Icons.menu, getTranslated('menu', context), 1),
+            _barItem(Icons.store, getTranslated('store', context), 1),
             _barItem(Icons.person, getTranslated('profile', context), 2),
           ],
           onTap: (int index) {

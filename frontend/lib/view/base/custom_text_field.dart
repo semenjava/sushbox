@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/provider/language_provider.dart';
-import 'package:resturant_delivery_boy/utill/dimensions.dart';
-import 'package:resturant_delivery_boy/utill/styles.dart';
+import 'package:sushibox/provider/language_provider.dart';
+import 'package:sushibox/utill/dimensions.dart';
+import 'package:sushibox/utill/styles.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? hintText;
@@ -26,35 +26,32 @@ class CustomTextField extends StatefulWidget {
   final TextCapitalization capitalization;
   final bool showTitle;
 
-
-
   const CustomTextField(
-      {Key? key, this.hintText = 'Write something...',
-        this.controller,
-        this.focusNode,
-        this.nextFocus,
-        this.inputType = TextInputType.text,
-        this.inputAction = TextInputAction.next,
-        this.maxLines = 1,
-        this.fillColor,
-        this.isCountryPicker = false,
-        this.isShowBorder = false,
-        this.isShowSuffixIcon = false,
-        this.isShowPrefixIcon = false,
-        this.onTap,
-        this.isIcon = false,
-        this.isPassword = false,
-        this.suffixIconUrl,
-        this.prefixIconUrl,
-        this.isSearch = false,
-        this.languageProvider,
-        this.capitalization = TextCapitalization.none,
-        this.showTitle = false
-
-      }) : super(key: key);
+      {Key? key,
+      this.hintText = 'Write something...',
+      this.controller,
+      this.focusNode,
+      this.nextFocus,
+      this.inputType = TextInputType.text,
+      this.inputAction = TextInputAction.next,
+      this.maxLines = 1,
+      this.fillColor,
+      this.isCountryPicker = false,
+      this.isShowBorder = false,
+      this.isShowSuffixIcon = false,
+      this.isShowPrefixIcon = false,
+      this.onTap,
+      this.isIcon = false,
+      this.isPassword = false,
+      this.suffixIconUrl,
+      this.prefixIconUrl,
+      this.isSearch = false,
+      this.languageProvider,
+      this.capitalization = TextCapitalization.none,
+      this.showTitle = false})
+      : super(key: key);
 
   @override
-
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
@@ -64,14 +61,19 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      widget.showTitle ? Text(widget.hintText!, style: rubikRegular.copyWith(fontSize: Dimensions.fontSizeSmall)) : const SizedBox(),
+      widget.showTitle
+          ? Text(widget.hintText!,
+              style: rubikRegular.copyWith(fontSize: Dimensions.fontSizeSmall))
+          : const SizedBox(),
       SizedBox(height: widget.showTitle ? Dimensions.paddingSizeExtraSmall : 0),
-
       Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
-            color: Theme.of(context).cardColor,
-            border: Border.all(color: widget.isShowBorder ? Theme.of(context).hintColor.withOpacity(0.5) : Colors.transparent),
+          borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+          color: Theme.of(context).cardColor,
+          border: Border.all(
+              color: widget.isShowBorder
+                  ? Theme.of(context).hintColor.withOpacity(0.5)
+                  : Colors.transparent),
         ),
         child: TextField(
           maxLines: widget.maxLines,
@@ -83,7 +85,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           cursorColor: Theme.of(context).primaryColor,
           obscureText: widget.isPassword ? _obscureText : false,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 22),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 16, horizontal: 22),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
               borderSide: const BorderSide(style: BorderStyle.none, width: 0),
@@ -98,30 +101,41 @@ class _CustomTextFieldState extends State<CustomTextField> {
             filled: true,
             prefixIcon: widget.isShowPrefixIcon
                 ? Padding(
-              padding: const EdgeInsets.only(left: Dimensions.paddingSizeLarge, right: Dimensions.paddingSizeSmall),
-              child: Image.asset(widget.prefixIconUrl!),
-            )
+                    padding: const EdgeInsets.only(
+                        left: Dimensions.paddingSizeLarge,
+                        right: Dimensions.paddingSizeSmall),
+                    child: Image.asset(widget.prefixIconUrl!),
+                  )
                 : const SizedBox.shrink(),
-            prefixIconConstraints: const BoxConstraints(minWidth: 23, maxHeight: 20),
+            prefixIconConstraints:
+                const BoxConstraints(minWidth: 23, maxHeight: 20),
             suffixIcon: widget.isShowSuffixIcon
                 ? widget.isPassword
-                ? IconButton(
-                icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility, color: Theme.of(context).hintColor.withOpacity(.3)),
-                onPressed: _toggle)
-                : widget.isIcon
-                ? Padding(
-              padding: const EdgeInsets.only(left: Dimensions.paddingSizeLarge, right: Dimensions.paddingSizeSmall),
-              child: Image.asset(
-                widget.suffixIconUrl!,
-                width: 15,
-                height: 15,
-              ),
-            )
-                : null
+                    ? IconButton(
+                        icon: Icon(
+                            _obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context).hintColor.withOpacity(.3)),
+                        onPressed: _toggle)
+                    : widget.isIcon
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                left: Dimensions.paddingSizeLarge,
+                                right: Dimensions.paddingSizeSmall),
+                            child: Image.asset(
+                              widget.suffixIconUrl!,
+                              width: 15,
+                              height: 15,
+                            ),
+                          )
+                        : null
                 : null,
           ),
           onTap: widget.onTap as void Function()?,
-          onSubmitted: (text) => widget.nextFocus != null ? FocusScope.of(context).requestFocus(widget.nextFocus) : null,
+          onSubmitted: (text) => widget.nextFocus != null
+              ? FocusScope.of(context).requestFocus(widget.nextFocus)
+              : null,
         ),
       ),
     ]);

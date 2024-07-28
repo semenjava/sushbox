@@ -1,7 +1,7 @@
-import 'package:resturant_delivery_boy/data/datasource/remote/dio/dio_client.dart';
-import 'package:resturant_delivery_boy/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/api_response.dart';
-import 'package:resturant_delivery_boy/utill/app_constants.dart';
+import 'package:sushibox/data/datasource/remote/dio/dio_client.dart';
+import 'package:sushibox/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:sushibox/data/model/response/base/api_response.dart';
+import 'package:sushibox/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashRepo {

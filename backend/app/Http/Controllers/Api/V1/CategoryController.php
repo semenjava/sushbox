@@ -17,6 +17,17 @@ class CategoryController extends Controller
     {
     }
 
+    public function get_categories_list(): JsonResponse
+    {
+        try {
+            $categories = $this->category->where(['position' => 0, 'status' => 1])->whereNotIn('id', [17])->orderBY('priority', 'ASC')->get();
+            return response()->json($categories, 200);
+
+        } catch (\Exception $e) {
+            return response()->json([], 200);
+        }
+    }
+
 
     /**
      * @return JsonResponse

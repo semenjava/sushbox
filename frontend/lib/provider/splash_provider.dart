@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/api_response.dart';
-import 'package:resturant_delivery_boy/data/model/response/config_model.dart';
-import 'package:resturant_delivery_boy/data/repository/splash_repo.dart';
-import 'package:resturant_delivery_boy/helper/api_checker.dart';
+import 'package:sushibox/data/model/response/base/api_response.dart';
+import 'package:sushibox/data/model/response/config_model.dart';
+import 'package:sushibox/data/repository/splash_repo.dart';
+import 'package:sushibox/helper/api_checker.dart';
 
 class SplashProvider extends ChangeNotifier {
   final SplashRepo? splashRepo;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/api_response.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/error_response.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/main.dart';
-import 'package:resturant_delivery_boy/provider/splash_provider.dart';
-import 'package:resturant_delivery_boy/view/screens/auth/login_screen.dart';
+import 'package:sushibox/data/model/response/base/api_response.dart';
+import 'package:sushibox/data/model/response/base/error_response.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/main.dart';
+import 'package:sushibox/provider/splash_provider.dart';
+import 'package:sushibox/view/screens/auth/login_screen.dart';
 
 class ApiChecker {
   static void checkApi(ApiResponse apiResponse) {

@@ -2,9 +2,9 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:resturant_delivery_boy/data/model/response/base/error_response.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/main.dart';
+import 'package:sushibox/data/model/response/base/error_response.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/main.dart';
 
 class ApiErrorHandler {
   static dynamic getMessage(error) {

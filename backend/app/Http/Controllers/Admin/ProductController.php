@@ -344,6 +344,7 @@ class ProductController extends Controller
     {
         $product = $this->product->withoutGlobalScopes()->with(['translations', 'main_branch_product'])->find($id);
         $product_category = json_decode($product->category_ids);
+        $product_category[0] = !empty($product_category[0]) ? $product_category[0] : $product_category;
         $categories = $this->category->where(['parent_id' => 0])->get();
 
         return view('admin-views.product.edit', compact('product', 'product_category', 'categories'));

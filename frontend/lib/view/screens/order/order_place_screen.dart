@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/utill/dimensions.dart';
-import 'package:resturant_delivery_boy/utill/images.dart';
-import 'package:resturant_delivery_boy/view/base/custom_button.dart';
-import 'package:resturant_delivery_boy/view/screens/dashboard/dashboard_screen.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/utill/dimensions.dart';
+import 'package:sushibox/utill/images.dart';
+import 'package:sushibox/view/base/custom_button.dart';
+import 'package:sushibox/view/screens/dashboard/dashboard_screen.dart';
 
 class OrderPlaceScreen extends StatelessWidget {
   final String? orderID;
@@ -26,7 +26,9 @@ class OrderPlaceScreen extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 'Order Successfully Delivered',
-                style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: Dimensions.fontSizeLarge, ),
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontSize: Dimensions.fontSizeLarge,
+                    ),
               ),
               const SizedBox(height: 10),
               Row(
@@ -34,7 +36,8 @@ class OrderPlaceScreen extends StatelessWidget {
                 children: [
                   Text(
                     getTranslated('order_id', context)!,
-                    style: Theme.of(context).textTheme.displayMedium!.copyWith(),
+                    style:
+                        Theme.of(context).textTheme.displayMedium!.copyWith(),
                   ),
                   Text(
                     ' #$orderID',
@@ -46,7 +49,10 @@ class OrderPlaceScreen extends StatelessWidget {
               CustomButton(
                 btnTxt: getTranslated('back_home', context),
                 onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (_) => const DashboardScreen()),
+                      (route) => false);
                 },
               )
             ],

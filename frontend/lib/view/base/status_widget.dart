@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/provider/theme_provider.dart';
-import 'package:resturant_delivery_boy/utill/dimensions.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/provider/theme_provider.dart';
+import 'package:sushibox/utill/dimensions.dart';
 import 'package:provider/provider.dart';
 
 class StatusWidget extends StatelessWidget {
@@ -26,7 +26,10 @@ class StatusWidget extends StatelessWidget {
                               child: Text(
                             getTranslated('dark', context)!,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .copyWith(
                                   color: Colors.white,
                                   fontSize: Dimensions.fontSizeSmall,
                                 ),
@@ -61,7 +64,10 @@ class StatusWidget extends StatelessWidget {
                               child: Text(
                             getTranslated('light', context)!,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .copyWith(
                                   color: Colors.white,
                                   fontSize: Dimensions.fontSizeSmall,
                                 ),

@@ -14,6 +14,42 @@ class ProductLogic
         return Product::active()->branchProductAvailability()->with(['rating', 'branch_product'])->where('id', $id)->first();
     }
 
+    public static function get_latested_products($limit, $offset, $product_type, $name, $category_ids)
+    {
+        $limit = is_null($limit) ? 10 : $limit;
+        $offset = is_null($offset) ? 1 : $offset;
+
+        $key = explode(' ', $name);
+        $paginator = Product::active()
+            // ->with(['branch_product'])
+            // ->whereHas('branch_product.branch', function ($query) {
+            //     $query->where('status', 1);
+            // })
+            // ->branchProductAvailability()
+            ->where(function ($q) use ($key) {
+                foreach ($key as $value) {
+                    $q->orWhere('name', 'like', "%{$value}%");
+                }})
+            ->when(isset($product_type) && ($product_type == 'veg' || $product_type == 'non_veg'), function ($query) use ($product_type) {
+                return $query->productType(($product_type == 'veg') ? 'veg' : 'non_veg');
+            })
+            ->when(isset($category_ids), function ($query) use ($category_ids) {
+                return $query->whereJsonContains('category_ids', ['id'=>$category_ids]);
+            })
+            ->where('id', '<=', 71)
+            ->with(['rating'])
+            ->latest()
+            // dd(vsprintf(str_replace(['?'], ['\'%s\''], $paginator->toSql()), $paginator->getBindings()));
+            ->paginate($limit, ['*'], 'page', $offset);
+        /*$paginator->count();*/
+        return [
+            'total_size' => $paginator->total(),
+            'limit' => $limit,
+            'offset' => $offset,
+            'products' => $paginator->items(),
+        ];
+    }
+
     public static function get_latest_products($limit, $offset, $product_type, $name, $category_ids)
     {
         $limit = is_null($limit) ? 10 : $limit;
@@ -38,6 +74,7 @@ class ProductLogic
             })
             ->with(['rating'])
             ->latest()
+            // dd(vsprintf(str_replace(['?'], ['\'%s\''], $paginator->toSql()), $paginator->getBindings()));
             ->paginate($limit, ['*'], 'page', $offset);
         /*$paginator->count();*/
         return [
@@ -109,6 +146,47 @@ class ProductLogic
             ->get();
     }
 
+    public static function searched_products($name, $limit, $offset, $product_type)
+    {
+        $limit = is_null($limit) ? 10 : $limit;
+        $offset = is_null($offset) ? 1 : $offset;
+
+        if($product_type != 'veg' && $product_type != 'non_veg') {
+            $product_type = 'all';
+        }
+
+        $key = explode(' ', $name);
+        $paginator = Product::active()
+            ->with(['rating', ]) //'branch_product'
+            // ->whereHas('branch_product.branch', function ($query) {
+            //     $query->where('status', 1);
+            // })
+            // ->branchProductAvailability()
+            ->when(isset($product_type) && ($product_type != 'all'), function ($query) use ($product_type) {
+                return $query->productType(($product_type == 'veg') ? 'veg' : 'non_veg');
+            })
+            ->where(function ($q) use ($key) {
+                foreach ($key as $value) {
+                    $q->orWhere('name', 'like', "%{$value}%");
+                }
+                $q->orWhereHas('tags',function($query) use ($key){
+                    $query->where(function($q) use ($key){
+                        foreach ($key as $value) {
+                            $q->where('tag', 'like', "%{$value}%");
+                        };
+                    });
+                });
+            })
+            ->paginate($limit, ['*'], 'page', $offset);
+
+        return [
+            'total_size' => $paginator->total(),
+            'limit' => $limit,
+            'offset' => $offset,
+            'products' => $paginator->items()
+        ];
+    }
+
     public static function search_products($name, $limit, $offset, $product_type)
     {
         $limit = is_null($limit) ? 10 : $limit;
@@ -139,6 +217,60 @@ class ProductLogic
                         };
                     });
                 });
+            })
+            ->paginate($limit, ['*'], 'page', $offset);
+
+        return [
+            'total_size' => $paginator->total(),
+            'limit' => $limit,
+            'offset' => $offset,
+            'products' => $paginator->items()
+        ];
+    }
+
+    public static function get_products_list($category_ids, $limit, $offset = 1, $product_type = 10)
+    {
+        $limit = is_null($limit) ? 10 : $limit;
+        $offset = is_null($offset) ? 1 : $offset;
+
+        if($product_type != 'veg' && $product_type != 'non_veg') {
+            $product_type = 'all';
+        }
+
+        $paginator = Product::active()
+            ->with(['rating'])
+            ->when(isset($product_type) && ($product_type != 'all'), function ($query) use ($product_type) {
+                return $query->productType(($product_type == 'veg') ? 'veg' : 'non_veg');
+            })
+            ->whereJsonContains('category_ids', ['id' => $category_ids[0]])
+            // ->whereRaw('JSON_EXTRACT(category_ids, "$.id") = ?', [$category_ids])
+            ->paginate($limit, ['*'], 'page', $offset);
+
+        return [
+            'total_size' => $paginator->total(),
+            'limit' => $limit,
+            'offset' => $offset,
+            'products' => $paginator->items()
+        ];
+    }
+
+    public static function get_products($limit, $offset = 1, $product_type = 10)
+    {
+        $limit = is_null($limit) ? 10 : $limit;
+        $offset = is_null($offset) ? 1 : $offset;
+
+        if($product_type != 'veg' && $product_type != 'non_veg') {
+            $product_type = 'all';
+        }
+
+        $paginator = Product::active()
+            ->with(['rating', 'branch_product'])
+            ->whereHas('branch_product.branch', function ($query) {
+                $query->where('status', 1);
+            })
+            ->branchProductAvailability()
+            ->when(isset($product_type) && ($product_type != 'all'), function ($query) use ($product_type) {
+                return $query->productType(($product_type == 'veg') ? 'veg' : 'non_veg');
             })
             ->paginate($limit, ['*'], 'page', $offset);
 

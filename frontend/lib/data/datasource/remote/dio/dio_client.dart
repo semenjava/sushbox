@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:resturant_delivery_boy/data/datasource/remote/dio/logging_interceptor.dart';
-import 'package:resturant_delivery_boy/utill/app_constants.dart';
+import 'package:sushibox/data/datasource/remote/dio/logging_interceptor.dart';
+import 'package:sushibox/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 

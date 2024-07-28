@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/data/model/response/language_model.dart';
-import 'package:resturant_delivery_boy/utill/app_constants.dart';
+import 'package:sushibox/data/model/response/language_model.dart';
+import 'package:sushibox/utill/app_constants.dart';
 
 class LanguageRepo {
   List<LanguageModel> getAllLanguages({BuildContext? context}) {

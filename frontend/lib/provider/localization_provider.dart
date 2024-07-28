@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:resturant_delivery_boy/data/datasource/remote/dio/dio_client.dart';
-import 'package:resturant_delivery_boy/main.dart';
-import 'package:resturant_delivery_boy/provider/auth_provider.dart';
-import 'package:resturant_delivery_boy/utill/app_constants.dart';
+import 'package:sushibox/data/datasource/remote/dio/dio_client.dart';
+import 'package:sushibox/main.dart';
+import 'package:sushibox/provider/auth_provider.dart';
+import 'package:sushibox/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalizationProvider extends ChangeNotifier {
@@ -11,7 +11,8 @@ class LocalizationProvider extends ChangeNotifier {
 
   final SharedPreferences? sharedPreferences;
 
-  LocalizationProvider({required this.sharedPreferences, required this.dioClient}) {
+  LocalizationProvider(
+      {required this.sharedPreferences, required this.dioClient}) {
     _loadCurrentLanguage();
   }
   Locale _locale = const Locale('en', 'US');
@@ -23,31 +24,35 @@ class LocalizationProvider extends ChangeNotifier {
 
   Future<void> setLanguage(Locale locale) async {
     _locale = locale;
-    if(_locale.languageCode == 'ar') {
+    if (_locale.languageCode == 'ar') {
       _isLtr = false;
-    }else {
+    } else {
       _isLtr = true;
     }
 
     _saveLanguage(_locale);
-   await dioClient!.updateHeader();
-   Provider.of<AuthProvider>(Get.context!, listen: false).updateToken();
+    await dioClient!.updateHeader();
+    Provider.of<AuthProvider>(Get.context!, listen: false).updateToken();
 
     notifyListeners();
   }
 
   _loadCurrentLanguage() async {
-    _locale = Locale(sharedPreferences!.getString(AppConstants.languageCode)
-        ?? AppConstants.languages[0].languageCode!, sharedPreferences!.getString(AppConstants.countryCode)
-        ?? AppConstants.languages[0].countryCode);
+    _locale = Locale(
+        sharedPreferences!.getString(AppConstants.languageCode) ??
+            AppConstants.languages[0].languageCode!,
+        sharedPreferences!.getString(AppConstants.countryCode) ??
+            AppConstants.languages[0].countryCode);
     _isLtr = _locale.languageCode == 'en';
     notifyListeners();
   }
 
   _saveLanguage(Locale locale) async {
-    sharedPreferences!.setString(AppConstants.languageCode, locale.languageCode);
+    sharedPreferences!
+        .setString(AppConstants.languageCode, locale.languageCode);
     sharedPreferences!.setString(AppConstants.countryCode, locale.countryCode!);
   }
-  String getLanguageCode() =>  sharedPreferences!.getString(AppConstants.languageCode) ?? '' ;
 
+  String getLanguageCode() =>
+      sharedPreferences!.getString(AppConstants.languageCode) ?? '';
 }

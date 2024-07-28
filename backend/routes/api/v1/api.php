@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleAuthController;
 
 Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function () {
 
@@ -20,6 +21,9 @@ Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function
         Route::post('forgot-password', 'PasswordResetController@reset_password_request');
         Route::post('verify-token', 'PasswordResetController@verify_token');
         Route::put('reset-password', 'PasswordResetController@reset_password_submit');
+
+        // Route::get('auth/google', [GoogleAuthController::class, 'redirectToGoogle']);
+        // Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 
         Route::group(['prefix' => 'delivery-man'], function () {
             Route::post('register', 'DeliveryManLoginController@registration');
@@ -69,11 +73,18 @@ Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function
 
     });
 
-    Route::group(['prefix' => 'products', 'middleware' => 'branch_adder'], function () {
+    Route::group(['prefix' => 'products'], function () {
+        Route::get('latested', 'ProductController@get_latest_products_front');
+        Route::post('searched', 'ProductController@get_search_products');
+        Route::get('list/{category_id}', 'ProductController@get_products_list');
+    });
+
+    Route::group(['prefix' => 'products', 'middleware' => 'branch_adder'], function () { //
         Route::get('latest', 'ProductController@get_latest_products');
         Route::get('popular', 'ProductController@get_popular_products');
         Route::get('set-menu', 'ProductController@get_set_menus');
         Route::get('search', 'ProductController@get_searched_products');
+        Route::get('list', 'ProductController@get_products');
         Route::get('details/{id}', 'ProductController@get_product');
         Route::get('related-products/{product_id}', 'ProductController@get_related_products');
         Route::get('reviews/{product_id}', 'ProductController@get_product_reviews');
@@ -91,6 +102,7 @@ Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function
 
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', 'CategoryController@get_categories');
+        Route::get('/list', 'CategoryController@get_categories_list');
         Route::get('childes/{category_id}', 'CategoryController@get_childes');
         Route::get('products/{category_id}', 'CategoryController@get_products')->middleware('branch_adder');
         Route::get('products/{category_id}/all', 'CategoryController@get_all_products')->middleware('branch_adder');

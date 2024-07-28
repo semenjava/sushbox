@@ -1887,4 +1887,6 @@
   'Default Language Changed!' => 'Default Language Changed!',
   'not_more_than_255_characters' => 'Not more than 255 characters',
   'Banner removed!' => 'Banner removed!',
+  'To Date' => 'To Date',
+  'Add_Attribute' => 'Add Attribute',
 );

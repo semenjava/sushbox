@@ -1,4 +1,4 @@
-# resturant_delivery_boy
+# sushibox
 
 A new Flutter application.
 

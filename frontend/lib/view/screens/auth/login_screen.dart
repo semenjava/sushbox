@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:resturant_delivery_boy/helper/email_checker.dart';
-import 'package:resturant_delivery_boy/localization/language_constrants.dart';
-import 'package:resturant_delivery_boy/main.dart';
-import 'package:resturant_delivery_boy/provider/auth_provider.dart';
-import 'package:resturant_delivery_boy/provider/splash_provider.dart';
-import 'package:resturant_delivery_boy/utill/dimensions.dart';
-import 'package:resturant_delivery_boy/utill/images.dart';
-import 'package:resturant_delivery_boy/utill/styles.dart';
-import 'package:resturant_delivery_boy/view/base/custom_button.dart';
-import 'package:resturant_delivery_boy/view/base/custom_snackbar.dart';
-import 'package:resturant_delivery_boy/view/base/custom_text_field.dart';
-import 'package:resturant_delivery_boy/view/screens/auth/delivery_man_registration_screen.dart';
-import 'package:resturant_delivery_boy/view/screens/dashboard/dashboard_screen.dart';
+import 'package:sushibox/helper/email_checker.dart';
+import 'package:sushibox/localization/language_constrants.dart';
+import 'package:sushibox/main.dart';
+import 'package:sushibox/provider/auth_provider.dart';
+import 'package:sushibox/provider/splash_provider.dart';
+import 'package:sushibox/utill/dimensions.dart';
+import 'package:sushibox/utill/images.dart';
+import 'package:sushibox/utill/styles.dart';
+import 'package:sushibox/view/base/custom_button.dart';
+import 'package:sushibox/view/base/custom_snackbar.dart';
+import 'package:sushibox/view/base/custom_text_field.dart';
+import 'package:sushibox/view/screens/auth/delivery_man_registration_screen.dart';
+import 'package:sushibox/view/screens/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -36,8 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
 
-    _emailController!.text = Provider.of<AuthProvider>(context, listen: false).getUserEmail();
-    _passwordController!.text = Provider.of<AuthProvider>(context, listen: false).getUserPassword();
+    _emailController!.text =
+        Provider.of<AuthProvider>(context, listen: false).getUserEmail();
+    _passwordController!.text =
+        Provider.of<AuthProvider>(context, listen: false).getUserPassword();
   }
 
   @override
@@ -49,7 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final SplashProvider splashProvider = Provider.of<SplashProvider>(context, listen: false);
+    final SplashProvider splashProvider =
+        Provider.of<SplashProvider>(context, listen: false);
 
     return Scaffold(
       body: Padding(
@@ -74,7 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Center(
                     child: Text(
                   getTranslated('login', context)!,
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 24, color: Theme.of(context).hintColor),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontSize: 24, color: Theme.of(context).hintColor),
                 )),
                 const SizedBox(height: 35),
                 Text(
@@ -122,21 +126,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                     width: 18,
                                     height: 18,
                                     decoration: BoxDecoration(
-                                        color: authProvider.isActiveRememberMe ? Theme.of(context).primaryColor : Theme.of(context).canvasColor,
-                                        border:
-                                            Border.all(color: authProvider.isActiveRememberMe ? Colors.transparent : Theme.of(context).highlightColor),
+                                        color: authProvider.isActiveRememberMe
+                                            ? Theme.of(context).primaryColor
+                                            : Theme.of(context).canvasColor,
+                                        border: Border.all(
+                                            color:
+                                                authProvider.isActiveRememberMe
+                                                    ? Colors.transparent
+                                                    : Theme.of(context)
+                                                        .highlightColor),
                                         borderRadius: BorderRadius.circular(3)),
                                     child: authProvider.isActiveRememberMe
-                                        ? const Icon(Icons.done, color: Colors.white, size: 17)
+                                        ? const Icon(Icons.done,
+                                            color: Colors.white, size: 17)
                                         : const SizedBox.shrink(),
                                   ),
-                                  const SizedBox(width: Dimensions.paddingSizeSmall),
+                                  const SizedBox(
+                                      width: Dimensions.paddingSizeSmall),
                                   Text(
                                     getTranslated('remember_me', context)!,
                                     style: Theme.of(context)
                                         .textTheme
                                         .displayMedium!
-                                        .copyWith(fontSize: Dimensions.fontSizeExtraSmall),
+                                        .copyWith(
+                                            fontSize:
+                                                Dimensions.fontSizeExtraSmall),
                                   )
                                 ],
                               ),
@@ -149,16 +163,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     authProvider.loginErrorMessage!.isNotEmpty
-                        ? CircleAvatar(backgroundColor: Theme.of(context).primaryColor, radius: 5)
+                        ? CircleAvatar(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            radius: 5)
                         : const SizedBox.shrink(),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         authProvider.loginErrorMessage ?? "",
-                        style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                              fontSize: Dimensions.fontSizeSmall,
-                              color: Theme.of(context).primaryColor,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displayMedium!.copyWith(
+                                  fontSize: Dimensions.fontSizeSmall,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                       ),
                     )
                   ],
@@ -173,22 +190,32 @@ class _LoginScreenState extends State<LoginScreen> {
                           String email = _emailController!.text.trim();
                           String password = _passwordController!.text.trim();
                           if (email.isEmpty) {
-                            showCustomSnackBar(getTranslated('enter_email_address', context)!);
-                          }else if (EmailChecker.isNotValid(email)) {
-                            showCustomSnackBar(getTranslated('enter_valid_email', context)!);
-                          }else if (password.isEmpty) {
-                            showCustomSnackBar(getTranslated('enter_password', context)!);
-                          }else if (password.length < 6) {
-                            showCustomSnackBar(getTranslated('password_should_be', context)!);
-                          }else {
-                            await authProvider.login(emailAddress: email, password: password).then((status) async {
+                            showCustomSnackBar(
+                                getTranslated('enter_email_address', context)!);
+                          } else if (EmailChecker.isNotValid(email)) {
+                            showCustomSnackBar(
+                                getTranslated('enter_valid_email', context)!);
+                          } else if (password.isEmpty) {
+                            showCustomSnackBar(
+                                getTranslated('enter_password', context)!);
+                          } else if (password.length < 6) {
+                            showCustomSnackBar(
+                                getTranslated('password_should_be', context)!);
+                          } else {
+                            await authProvider
+                                .login(emailAddress: email, password: password)
+                                .then((status) async {
                               if (status.isSuccess) {
                                 if (authProvider.isActiveRememberMe) {
-                                  authProvider.saveUserNumberAndPassword(email, password);
+                                  authProvider.saveUserNumberAndPassword(
+                                      email, password);
                                 } else {
                                   authProvider.clearUserEmailAndPassword();
                                 }
-                                await Navigator.of(Get.context!).pushReplacement(MaterialPageRoute(builder: (_) => const DashboardScreen()));
+                                await Navigator.of(Get.context!)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (_) =>
+                                            const DashboardScreen()));
                               }
                             });
                           }
@@ -196,24 +223,38 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     : Center(
                         child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor),
                       )),
-
 
                 const SizedBox(height: 10),
 
-                splashProvider.configModel!.toggleDmRegistration! ? TextButton(
-                  style: TextButton.styleFrom(
-                    minimumSize: const Size(1, 40),
-                  ),
-                  onPressed: () async => await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const DeliveryManRegistrationScreen()),
-                  ),
-                  child: RichText(text: TextSpan(children: [
-                    TextSpan(text: '${getTranslated('join_as_a', context)} ', style: rubikRegular.copyWith(color: Theme.of(context).disabledColor)),
-                    TextSpan(text:getTranslated('delivery_man', context), style: rubikMedium.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color)),
-                  ])),
-                ) : const SizedBox(),
+                splashProvider.configModel!.toggleDmRegistration!
+                    ? TextButton(
+                        style: TextButton.styleFrom(
+                          minimumSize: const Size(1, 40),
+                        ),
+                        onPressed: () async => await Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  const DeliveryManRegistrationScreen()),
+                        ),
+                        child: RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: '${getTranslated('join_as_a', context)} ',
+                              style: rubikRegular.copyWith(
+                                  color: Theme.of(context).disabledColor)),
+                          TextSpan(
+                              text: getTranslated('delivery_man', context),
+                              style: rubikMedium.copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .color)),
+                        ])),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),
