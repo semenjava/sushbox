@@ -8,6 +8,8 @@ import 'package:sushibox/view/screens/profile/profile_screen.dart';
 import 'package:sushibox/view/screens/product/product_list_screen.dart';
 import 'package:sushibox/view/screens/category/category_list_screen.dart'; // Импорт CategoryListScreen
 import 'package:sushibox/provider/home_provider.dart';
+import 'package:sushibox/provider/customer_provider.dart';
+import 'package:sushibox/view/screens/auth/login_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -25,16 +27,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-
-    _screens = [
-      HomeScreen(),
-      CategoryListScreen(),
-      const ProfileScreen(),
-    ];
+    _updateScreens();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Rebuild the screens if the authentication status changes
+    final customerProvider = Provider.of<CustomerProvider>(context);
+    if (customerProvider.isAuthenticated && _screens.length < 4) {
+      _updateScreens();
+    }
+
     return WillPopScope(
       onWillPop: () async {
         if (_pageIndex != 0) {
@@ -89,5 +92,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _pageController.jumpToPage(pageIndex);
       _pageIndex = pageIndex;
     });
+  }
+
+  void _updateScreens() {
+    final customerProvider =
+        Provider.of<CustomerProvider>(context, listen: false);
+
+    _screens = [
+      HomeScreen(),
+      CategoryListScreen(),
+      if (customerProvider.isAuthenticated) ProfileScreen() else LoginScreen(),
+    ];
   }
 }

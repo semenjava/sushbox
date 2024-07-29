@@ -1,3 +1,4 @@
+// lib/view/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -6,12 +7,15 @@ import 'package:sushibox/view/screens/home/widget/category_widget.dart';
 import 'package:sushibox/provider/banner_provider.dart';
 import 'package:sushibox/provider/home_provider.dart';
 import 'package:sushibox/provider/products_latest_provider.dart';
+import 'package:sushibox/provider/customer_provider.dart'; // Импорт CustomerProvider
 import 'package:sushibox/utill/dimensions.dart';
 import 'package:sushibox/view/screens/language/choose_language_screen.dart';
 import 'package:sushibox/view/screens/search/search_screen.dart';
 import 'package:sushibox/view/screens/cart/cart_screen.dart';
+import 'package:sushibox/view/screens/profile/profile_screen.dart'; // Импорт экрана профиля
 import 'package:sushibox/utill/app_constants.dart';
 import 'package:sushibox/view/screens/product/product_detail_screen.dart';
+import 'package:sushibox/view/screens/auth/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -25,6 +29,7 @@ class HomeScreen extends StatelessWidget {
     Provider.of<BannerProvider>(context, listen: false).getBannerList(context);
     Provider.of<ProductsLatestProvider>(context, listen: false)
         .getProductsLatest(context);
+    final customerProvider = Provider.of<CustomerProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -150,54 +155,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      // Categories
-                      homeProvider.categoryList != null
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 10),
-                                Container(
-                                  height: 200, // Fixed height
-                                  child: PageView.builder(
-                                    itemCount:
-                                        (homeProvider.categoryList!.length / 8)
-                                            .ceil(),
-                                    itemBuilder: (context, pageIndex) {
-                                      final startIndex = pageIndex * 8;
-                                      final endIndex = (startIndex + 8) >
-                                              homeProvider.categoryList!.length
-                                          ? homeProvider.categoryList!.length
-                                          : startIndex + 8;
-                                      final pageCategories = homeProvider
-                                          .categoryList!
-                                          .sublist(startIndex, endIndex);
-
-                                      return GridView.builder(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 4,
-                                          childAspectRatio: 1,
-                                          crossAxisSpacing:
-                                              Dimensions.paddingSizeSmall,
-                                          mainAxisSpacing:
-                                              Dimensions.paddingSizeSmall,
-                                        ),
-                                        itemCount: pageCategories.length,
-                                        itemBuilder: (context, index) {
-                                          return CategoryWidget(
-                                            category: pageCategories[index],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Center(child: CircularProgressIndicator()),
-                      const SizedBox(height: 20),
                       // Banners
                       bannerProvider.bannerList != null &&
                               bannerProvider.bannerList!.isNotEmpty
@@ -310,6 +267,55 @@ class HomeScreen extends StatelessWidget {
                                   );
                                 },
                               ),
+                            )
+                          : Center(child: CircularProgressIndicator()),
+
+                      const SizedBox(height: 20),
+                      // Categories
+                      homeProvider.categoryList != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 10),
+                                // Заголовок "Меню"
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Text(
+                                    getTranslated('menu', context)!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium, // Стиль заголовка
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                // GridView с категориями
+                                GridView.builder(
+                                  physics:
+                                      NeverScrollableScrollPhysics(), // Отключение прокрутки
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2, // Два элемента в ряд
+                                    childAspectRatio:
+                                        1, // Соотношение сторон элементов
+                                    crossAxisSpacing:
+                                        Dimensions.paddingSizeSmall,
+                                    mainAxisSpacing:
+                                        Dimensions.paddingSizeSmall,
+                                  ),
+                                  itemCount: homeProvider.categoryList!.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CategoryWidget(
+                                        category:
+                                            homeProvider.categoryList![index],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
                             )
                           : Center(child: CircularProgressIndicator()),
                     ],

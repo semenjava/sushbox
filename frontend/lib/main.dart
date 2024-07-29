@@ -22,6 +22,7 @@ import 'package:sushibox/provider/home_provider.dart';
 import 'package:sushibox/provider/products_latest_provider.dart';
 import 'package:sushibox/provider/product_provider.dart';
 import 'package:sushibox/provider/cart_provider.dart';
+import 'package:sushibox/provider/customer_provider.dart';
 import 'package:sushibox/theme/dark_theme.dart';
 import 'package:sushibox/view/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -77,6 +78,7 @@ Future<void> main() async {
           create: (context) => di.sl<ProductsLatestProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<CartProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<CustomerProvider>()),
     ],
     child: const MyApp(),
   ));

@@ -24,6 +24,7 @@ use Illuminate\Support\Carbon;
 use Carbon\CarbonInterval;
 use App\Traits\SmsGateway;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerAuthController extends Controller
 {
@@ -32,6 +33,7 @@ class CustomerAuthController extends Controller
         private BusinessSetting $business_setting,
         private PhoneVerification $phone_verification
     ){}
+
 
     /**
      * Регистрация нового пользователя
@@ -55,19 +57,6 @@ class CustomerAuthController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        if ($request->referral_code) {
-            $refer_user = $this->user->where(['refer_code' => $request->referral_code])->first();
-            if ($refer_user) {
-                $request['refer_user_id'] = $refer_user->id;
-            } else {
-                return response()->json([
-                    'errors' => [
-                        ['code' => 'referral_code', 'message' => translate('Invalid referral code!')]
-                    ]
-                ], 403);
-            }
-        }
-
         $user = $this->user->create([
             'f_name' => $request->f_name,
             'l_name' => $request->l_name,
@@ -76,33 +65,13 @@ class CustomerAuthController extends Controller
             'password' => bcrypt($request->password),
             'is_active' => 1,
             'refer_code' => Str::random(10),
-            'refer_user_id' => $request['refer_user_id'] ?? null,
         ]);
 
-        if ($this->business_setting->where(['key' => 'phone_verification'])->first()->value) {
-            $otp = rand(1000, 9999);
-            $this->phone_verification->create([
-                'phone' => $request->phone,
-                'token' => $otp,
-                'created_at' => now(),
-                'expires_at' => now()->addMinutes(10),
-            ]);
-            SMS_module::send($request->phone, $otp);
-        }
+        $token = JWT::encode(['id' => $user->id, 'exp' => now()->addHours(24)->timestamp], env('JWT_SECRET'), 'HS256');
 
-        if ($this->business_setting->where(['key' => 'email_verification'])->first()->value) {
-            $token = Str::random(120);
-            DB::table('email_verifications')->insert([
-                'email' => $request['email'],
-                'token' => $token,
-                'created_at' => now(),
-                'expires_at' => now()->addMinutes(60),
-            ]);
-            $location = $request->header('X-localization') ?? 'en';
-            Mail::to($request['email'])->send(new EmailVerification($token, $location));
-        }
+        DB::table('users')->where('id', $user->id)->update(['temporary_token' => $token]);
 
-        return response()->json(['message' => 'Successfully registered!'], 200);
+        return response()->json(['message' => 'Successfully registered!', 'token' => $token, 'user' => ['name' => $user->f_name.' '.$user->l_name, 'phone' => $user->phone]], 200);
     }
 
     /**
@@ -169,7 +138,7 @@ class CustomerAuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'phone' => 'required|min:5|max:20',
-            'otp' => 'required|min:4|max:4',
+            'password' => 'required|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -232,7 +201,7 @@ class CustomerAuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'phone' => 'required|min:5|max:20',
             'password' => 'required|min:6',
         ]);
 
@@ -240,7 +209,7 @@ class CustomerAuthController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        $user = $this->user->where('email', $request->email)->first();
+        $user = $this->user->where('phone', $request->phone)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             if ($user->is_active == 0) {
@@ -251,7 +220,9 @@ class CustomerAuthController extends Controller
 
             $token = JWT::encode(['id' => $user->id], env('JWT_SECRET'), 'HS256');
 
-            return response()->json(['token' => $token], 200);
+            DB::table('users')->where('id', $user->id)->update(['temporary_token' => $token]);
+
+            return response()->json(['token' => $token, 'user' => ['name' => $user->f_name.' '.$user->l_name, 'phone' => $user->phone]], 200);
         }
 
         return response()->json(['errors' => [
@@ -297,6 +268,8 @@ class CustomerAuthController extends Controller
         );
 
         $token = JWT::encode(['id' => $user->id], env('JWT_SECRET'), 'HS256');
+
+        DB::table('users')->where('id', $user->id)->update(['temporary_token' => $token]);
 
         return response()->json(['token' => $token], 200);
     }

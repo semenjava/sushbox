@@ -17,7 +17,7 @@ class ApiChecker {
           .removeSharedData();
       Navigator.pushAndRemoveUntil(
         Get.context!,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
+        MaterialPageRoute(builder: (_) => LoginScreen()),
         (route) => false,
       );
     } else {

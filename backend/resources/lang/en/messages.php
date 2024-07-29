@@ -1889,4 +1889,6 @@
   'Banner removed!' => 'Banner removed!',
   'To Date' => 'To Date',
   'Add_Attribute' => 'Add Attribute',
+  'Invalid credentials!' => 'Invalid credentials!',
+  'You have been successfully logged out!' => 'You have been successfully logged out!',
 );

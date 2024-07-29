@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'f_name', 'l_name', 'phone', 'email', 'password', 'point', 'is_active', 'user_type', 'refer_code', 'refer_by', 'language_code'
+        'f_name', 'l_name', 'phone', 'email', 'password', 'point', 'is_active', 'user_type', 'refer_code', 'refer_by', 'language_code'
     ];
 
     /**
@@ -32,7 +32,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'temporary_token'
     ];
 
     /**
@@ -92,5 +92,14 @@ class User extends Authenticatable
         }
     }
 
+    public function token()
+    {
+        return $this->temporary_token;
+    }
 
+    public function revoke()
+    {
+        $this->temporary_token = null;
+        $this->save();
+    }
 }

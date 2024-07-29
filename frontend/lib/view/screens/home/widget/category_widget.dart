@@ -43,8 +43,8 @@ class CategoryWidget extends StatelessWidget {
               if (category.image != null)
                 Image.network(
                   '${AppConstants.baseUrl}${AppConstants.imageFolder}category/${category.image}',
-                  height: 60, // Change height here
-                  width: 60, // Change width here
+                  height: 130, // Change height here
+                  width: 130, // Change width here
                   fit: BoxFit.cover,
                 ),
               SizedBox(height: 0), // Add space between image and text

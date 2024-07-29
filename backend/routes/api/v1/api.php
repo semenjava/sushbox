@@ -6,8 +6,10 @@ use App\Http\Controllers\GoogleAuthController;
 Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function () {
 
     Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
+
         Route::post('registration', 'CustomerAuthController@registration');
         Route::post('login', 'CustomerAuthController@login');
+
         Route::post('social-customer-login', 'CustomerAuthController@social_customer_login');
 
         Route::post('check-phone', 'CustomerAuthController@check_phone');
@@ -113,6 +115,7 @@ Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function
         Route::put('update-profile', 'CustomerController@update_profile');
         Route::put('cm-firebase-token', 'CustomerController@update_cm_firebase_token')->withoutMiddleware(['auth:api', 'is_active']);
         Route::get('transaction-history', 'CustomerController@get_transaction_history');
+        Route::post('logout', 'CustomerController@logout');
 
         Route::namespace('Auth')->group(function () {
             Route::delete('remove-account', 'CustomerAuthController@remove_account');

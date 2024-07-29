@@ -82,6 +82,7 @@ class DioClient {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
+    print('!!! Sending POST request to: ${data}');
     try {
       var response = await dio!.post(
         uri,

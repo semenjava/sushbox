@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class Authenticate extends Middleware
 {
@@ -12,10 +14,29 @@ class Authenticate extends Middleware
      * @param  \Illuminate\Http\Request  $request
      * @return string|null
      */
-    protected function redirectTo($request)
+    protected function authenticate($request, array $guards)
     {
-        if (! $request->expectsJson()) {
-            return route('authentication-failed');
+        if (empty($guards)) {
+            $guards = [null];
         }
+
+        $authorizationHeader = $request->header('Authorization');
+        if (strpos($authorizationHeader, 'Bearer ') === 0) {
+            $token = substr($authorizationHeader, 7);
+            $user = Auth::guard('token')->user();
+
+            if ($user && $user->temporary_token === $token) {
+                Auth::shouldUse('token');
+                return;
+            }
+        }
+
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return Auth::shouldUse($guard);
+            }
+        }
+
+        $this->unauthenticated($request, $guards);
     }
 }

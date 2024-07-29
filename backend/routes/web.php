@@ -34,7 +34,7 @@ Route::get('privacy-policy', 'HomeController@privacy_policy')->name('privacy-pol
  */
 Route::get('authentication-failed', function () {
     $errors = [];
-    array_push($errors, ['code' => 'auth-001', 'message' => 'Unauthenticated.']);
+    array_push($errors, ['code' => 'auth-002', 'message' => 'Unauthenticated.']);
     return response()->json([
         'errors' => $errors,
     ], 401);

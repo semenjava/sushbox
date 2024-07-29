@@ -86,7 +86,7 @@ class ChooseLanguageScreen extends StatelessWidget {
                             } else {
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                      builder: (_) => const LoginScreen()));
+                                      builder: (_) => LoginScreen()));
                             }
                           } else {
                             showCustomSnackBar(

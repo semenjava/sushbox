@@ -14,6 +14,7 @@ use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -28,6 +29,14 @@ class CustomerController extends Controller
     )
     {
     }
+
+    public function logout(Request $request)
+    {
+        Auth::user()->revoke();
+
+        return response(['message' => translate('You have been successfully logged out!')], 200);
+    }
+
 
 
     /**

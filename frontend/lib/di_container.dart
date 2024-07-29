@@ -31,6 +31,7 @@ import 'package:sushibox/provider/products_latest_provider.dart';
 import 'package:sushibox/data/repository/cart_repo.dart';
 import 'package:sushibox/provider/cart_provider.dart';
 import 'package:sushibox/provider/product_provider.dart';
+import 'package:sushibox/provider/customer_provider.dart';
 
 final sl = GetIt.instance;
 
@@ -81,6 +82,7 @@ Future<void> init() async {
   sl.registerFactory(() => ProductsLatestProvider(productsLatestRepo: sl()));
   sl.registerFactory(() => ProductProvider(productRepo: sl()));
   sl.registerFactory(() => CartProvider(cartRepo: sl()));
+  sl.registerFactory(() => CustomerProvider());
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
