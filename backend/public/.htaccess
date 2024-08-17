@@ -1,0 +1,40 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Сначала проверьте, существует ли запрос на файл или каталог
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Перенаправьте все остальные запросы на index.php
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Отключить кэширование для файлов .php
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate"
+        Header set Pragma "no-cache"
+    </FilesMatch>
+</IfModule>
+
+# Защита файлов конфигурации и других важных файлов
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files artisan>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Отключение доступа к Git-репозиторию
+RedirectMatch 404 /\.git
+
+# Отключение доступа к файлам, защищенным конфигурацией
+RedirectMatch 404 /\.env
+RedirectMatch 404 /composer\.(json|lock)
+RedirectMatch 404 /package\.json
+RedirectMatch 404 /webpack\.mix\.js
+RedirectMatch 404 /server\.php
+RedirectMatch 404 /artisan
