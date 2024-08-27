@@ -1891,4 +1891,6 @@
   'Add_Attribute' => 'Add Attribute',
   'Invalid credentials!' => 'Invalid credentials!',
   'You have been successfully logged out!' => 'You have been successfully logged out!',
+  'select_minimum_one_selection_box' => 'Select minimum one selection box',
+  0 => '0',
 );

@@ -4,7 +4,8 @@ import 'package:sushibox/utill/images.dart';
 class AppConstants {
   static const String appName = '';
   static const double appVersion = 10.2;
-  static const String baseUrl = 'http://10.0.2.2:8000';
+  static const String baseUrl =
+      'http://10.0.2.2:8000'; //'https://app.sushi-box.gr'; //'http://10.0.2.2:8000';
   static const String profileUri = '/api/v1/delivery-man/profile?token=';
   static const String configUri = '/api/v1/config';
   static const String bannerUri = '/api/v1/banners';
@@ -37,7 +38,7 @@ class AppConstants {
 
   // Shared Key
   static const String theme = 'theme';
-  static const String token = 'token';
+  static const String token = 'auth_token';
   static const String countryCode = 'country_code';
   static const String languageCode = 'language_code';
   static const String cartList = 'cart_list';

@@ -85,7 +85,7 @@ class CustomerProvider with ChangeNotifier {
         },
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final data = response.data;
         _token = data['token'];
         _isAuthenticated = true;
@@ -179,7 +179,7 @@ class CustomerProvider with ChangeNotifier {
 
   Future<void> _saveUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', _token ?? '');
+    await prefs.setString('auth_token', _token ?? '');
     await prefs.setString('user_name', _customer?.name ?? '');
     await prefs.setString('user_email', _customer?.email ?? '');
     await prefs.setString('user_phone', _customer?.phone ?? '');
@@ -187,7 +187,7 @@ class CustomerProvider with ChangeNotifier {
 
   Future<void> _clearUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
+    await prefs.remove('auth_token');
     await prefs.remove('user_name');
     await prefs.remove('user_email');
     await prefs.remove('user_phone');

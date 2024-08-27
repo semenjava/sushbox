@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
+    const STATUS_PAID = 'paid';
+    const STATUS_UNPAID = 'unpaid';
+
     protected $casts = [
         'order_amount' => 'float',
         'coupon_discount_amount' => 'float',

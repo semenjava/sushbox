@@ -191,14 +191,14 @@ class _CartScreenState extends State<CartScreen> {
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                            Color(0xFFC6A87D), // устанавливаем цвет кнопки
+                            Color(0xFFC6A87D), 
                           ),
                         ),
                         child: Text(
                           getTranslated('checkout', context)!,
                           style: TextStyle(
                               color: Colors
-                                  .white), // устанавливаем белый цвет текста
+                                  .white), 
                         ),
                       ),
                     ],

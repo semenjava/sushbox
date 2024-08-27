@@ -41,6 +41,13 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    'paymets' => [
+        'client_id' => 'sq8yfx3hrsnjj77gbjgktbw5iyx1fvomesda3w7s39y04.apps.vivapayments.com',
+        'client_secret' => 'FgiVK5aoo9B0K2n5fhXJep5eK3M95Z',
+        'merchant_id' => 'dbd9951e-3f82-4d86-be11-b511c5007730',
+        'api_key' => '1Y6CvCfZ0r5G3Gj7ra7696ZWUa60nY'
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application URL

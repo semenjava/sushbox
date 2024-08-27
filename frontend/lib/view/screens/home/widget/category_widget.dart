@@ -24,44 +24,58 @@ class CategoryWidget extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.transparent, // Установка прозрачного фона
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromARGB(255, 7, 33, 66).withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 3), // Смещение тени
-            ),
-          ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (category.image != null)
-                Image.network(
-                  '${AppConstants.baseUrl}${AppConstants.imageFolder}category/${category.image}',
-                  height: 130, // Change height here
-                  width: 130, // Change width here
-                  fit: BoxFit.cover,
+        child: Stack(
+          children: [
+            // Изображение
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                '${AppConstants.baseUrl}${AppConstants.imageFolder}category/${category.image}',
+                height: 155, // Высота изображения
+                width: double.infinity, // Ширина изображения
+                fit: BoxFit.cover,
+              ),
+            ),
+            // Текст поверх изображения
+            Positioned(
+              top: 0, // Размещаем текст вверху
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  color: Colors.black
+                      .withOpacity(0.3), // Полупрозрачный черный фон для текста
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
                 ),
-              SizedBox(height: 0), // Add space between image and text
-              Flexible(
                 child: Text(
                   category.name!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.normal,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(0, 1), // Смещение тени
+                        blurRadius: 4, // Радиус размытия тени
+                        color: Colors.black
+                            .withOpacity(0.5), // Полупрозрачная тень
+                      ),
+                    ],
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

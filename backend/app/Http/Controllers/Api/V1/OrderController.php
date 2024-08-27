@@ -22,6 +22,8 @@ use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use function App\CentralLogics\translate;
@@ -67,6 +69,233 @@ class OrderController extends Controller
         }
 
         return response()->json(OrderLogic::track_order($request['order_id']), 200);
+    }
+
+    public function place(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'address' => 'required',
+            'items' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        $customer = $this->user->find(Auth::user()->id);
+
+        $preparation_time = Helpers::get_business_settings('default_preparation_time') ?? 0;
+        $del_date = Carbon::now()->format('Y-m-d');
+        $del_time = Carbon::now()->add($preparation_time, 'minute')->format('H:i:s');
+
+        $order_amount = 0;
+        foreach ($request->items as $item)  {
+            $order_amount += $item['product']['price'] * $item['quantity'];
+        }
+
+        $coupon_discount_title = !empty($request->coupon_discount_title ) ? $request->coupon_discount_title : 'not_coupon';
+        $coupon_discount_amount = !empty($request->coupon_discount_amount) ? $request->coupon_discount_amount : 0;
+
+        try {
+            $order_id = 100000 + $this->order->all()->count() + 1;
+            $or = [
+                'id' => $order_id,
+                'user_id' => Auth::user()->id,
+                'is_guest' => 0,
+                'order_amount' => Helpers::set_price($order_amount),
+                'coupon_discount_amount' => Helpers::set_price($coupon_discount_amount),
+                'coupon_discount_title' => $coupon_discount_title ?? 'coupon_discount_title',
+                'payment_status' => Order::STATUS_UNPAID,
+                'order_status' => 'pending',
+                'coupon_code' => $request['coupon_code'] ?? '',
+                'payment_method' => 'wallet_payment',
+                'transaction_reference' => $request->transaction_reference ?? null,
+                'order_note' => 0,
+                'order_type' => 0,
+                'branch_id' => 1,
+                'delivery_address_id' => null,
+                'delivery_date' => $del_date,
+                'delivery_time' => $del_time,
+                'delivery_address' => $request->address,
+                'delivery_charge' => $request['order_type'] != 'take_away' ? Helpers::get_delivery_charge($request['distance']) : 0,
+                'preparation_time' => 0,
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
+
+            $total_tax_amount = 0;
+            $add_on_prices = [];
+            $add_on_taxes = [];
+            $add_on_quantities = 0;
+
+            foreach ($request->items as $item)  {
+
+               $product = $this->product->find($item['product']['id']);
+
+               $add_on_prices[] = $product['price'];
+               $add_on_taxes[] = ($product['price']*$product['tax'])/100;
+
+
+               $total_addon_tax = array_reduce(
+                    array_map(function ($a, $b) {
+                        return $a * $b;
+                    }, [], $add_on_taxes),
+                    function ($carry, $item) {
+                        return $carry + $item;
+                    },
+                    0
+                );
+
+                $or_d = [
+                    'order_id' => $order_id,
+                    'product_id' => $item['product']['id'],
+                    'product_details' => $product,
+                    'quantity' => $item['quantity'],
+                    'price' => $item['product']['price'],
+                    'tax_amount' => Helpers::tax_calculate($product, $item['product']['price']),
+                    'discount_on_product' => 0,
+                    'discount_type' => 'discount_on_product',
+                    'variant' => json_encode($item['product']['variations']),
+                    'variation' => null,
+                    'add_on_ids' => null,
+                    'add_on_qtys' => null,
+                    'add_on_prices' => json_encode($add_on_prices),
+                    'add_on_taxes' => json_encode($add_on_taxes),
+                    'add_on_tax_amount' => $total_addon_tax,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
+
+                $total_tax_amount += $or_d['tax_amount'] * $item['quantity'];
+                $this->order_detail->insert($or_d);
+            }
+
+            $or['total_tax_amount'] = $total_tax_amount;
+
+            if ($or['payment_method'] == 'wallet_payment') {
+                $amount = $or['order_amount'] + $or['delivery_charge'];
+                CustomerLogic::create_wallet_transaction($or['user_id'], $amount, 'order_place', $or['id']);
+            }
+
+            $client_id = config('app.paymets.client_id');
+            $client_secret = config('app.paymets.client_secret');
+            $auth = base64_encode("$client_id:$client_secret");
+
+            $response = Http::asForm()->withHeaders([
+                'Authorization' => "Basic $auth",
+            ])->post('https://accounts.vivapayments.com/connect/token', [
+                'grant_type' => 'client_credentials',
+            ]);
+
+            $access_token = $response->json('access_token');
+
+            $payment_data = [
+                'amount' => $order_amount * 100, // сумма в центах
+                'customerTrns' => 'Order #' . $order_id,
+                'customer' => [
+                    'email' => $customer->email,
+                    'fullName' => $customer->f_name . ' ' . $customer->l_name,
+                    'phone' => $customer->phone ?? '',
+                    'countryCode' => 'GR',  // замените на код страны клиента
+                    'requestLang' => \App::getLocale(),  // язык интерфейса оплаты
+                ],
+                'paymentTimeout' => 300,  // время ожидания в секундах
+                'preauth' => true,
+                'sourceCode' => 'Default',
+                'merchantTrns' => 'Order #' . $order_id
+            ];
+
+            $payment_response = Http::withToken($access_token)
+                ->post('https://api.vivapayments.com/checkout/v2/orders', $payment_data);
+
+            if ($payment_response->successful()) {
+                $order_code = $payment_response->json('orderCode');
+                $or['callback'] = "https://www.vivapayments.com/web/checkout?ref=$order_code";
+
+                // Сохранение заказа в БД
+                $this->order->insertGetId($or);
+
+
+            //send push notification
+                if ((bool)auth('api')->user()){
+                    $fcm_token = auth('api')->user()->cm_firebase_token;
+                    $local = auth('api')->user()->language_code;
+                    $customer_name = auth('api')->user()->f_name . ' '. auth('api')->user()->l_name;
+                }else{
+                    $guest = GuestUser::find($request['guest_id']);
+                    $fcm_token = $guest ? $guest->fcm_token : '';
+                    $local = 'en';
+                    $customer_name = 'Guest User';
+                }
+
+                $message = Helpers::order_status_update_message($or['order_status']);
+
+                if ($local != 'en'){
+                    $status_key = Helpers::order_status_message_key($or['order_status']);
+                    $translated_message = $this->business_setting->with('translations')->where(['key' => $status_key])->first();
+                    if (isset($translated_message->translations)){
+                        foreach ($translated_message->translations as $translation){
+                            if ($local == $translation->locale){
+                                $message = $translation->value;
+                            }
+                        }
+                    }
+                }
+                $restaurant_name = 'SushiBox';
+                $value = Helpers::text_variable_data_format(value:$message, user_name: $customer_name, restaurant_name: $restaurant_name,  order_id: $order_id);
+
+                try {
+                    if ($value && isset($fcm_token)) {
+                        $data = [
+                            'title' => translate('Order'),
+                            'description' => $value,
+                            'order_id' => (bool)auth('api')->user() ? $order_id : null,
+                            'image' => '',
+                            'type' => 'order_status',
+                        ];
+                        Helpers::send_push_notif_to_device($fcm_token, $data);
+                    }
+                } catch (\Exception $e) {
+                    //
+                }
+
+                try {
+                    $emailServices = Helpers::get_business_settings('mail_config');
+                    $order_mail_status = Helpers::get_business_settings('place_order_mail_status_user');
+                    if (isset($emailServices['status']) && $emailServices['status'] == 1 && $order_mail_status == 1 && (bool)auth('api')->user()) {
+                        Mail::to(auth('api')->user()->email)->send(new \App\Mail\OrderPlaced($order_id));
+                    }
+                }catch (\Exception $e) {
+                    //dd($e);
+                }
+
+                if ($or['order_status'] == 'confirmed') {
+                    $data = [
+                        'title' => translate('You have a new order - (Order Confirmed).'),
+                        'description' => $order_id,
+                        'order_id' => $order_id,
+                        'image' => '',
+                    ];
+
+                    try {
+                        Helpers::send_push_notif_to_topic($data, "kitchen-{$or['branch_id']}", 'general');
+
+                    } catch (\Exception $e) {
+                        Toastr::warning(translate('Push notification failed!'));
+                    }
+                }
+
+                return response()->json([
+                    'message' => translate('order_success'),
+                    'order_id' => $order_id,
+                    'order_code' => $order_code,
+                    'redirect_url' => "https://www.vivapayments.com/web/checkout?ref=$order_code",
+                ], 200);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([$e], 403);
+        }
     }
 
     /**

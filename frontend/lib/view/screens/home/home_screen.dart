@@ -98,16 +98,7 @@ class HomeScreen extends StatelessWidget {
           // Background image with dark overlay
           Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                  '${AppConstants.baseUrl}/assets/img/home.jpg',
-                ),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.4),
-                  BlendMode.srcOver,
-                ),
-              ),
+              color: Colors.black.withOpacity(0.4),
             ),
             child: RefreshIndicator(
               key: _refreshIndicatorKey,
@@ -307,7 +298,7 @@ class HomeScreen extends StatelessWidget {
                                   itemCount: homeProvider.categoryList!.length,
                                   itemBuilder: (context, index) {
                                     return Container(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(4.0),
                                       child: CategoryWidget(
                                         category:
                                             homeProvider.categoryList![index],

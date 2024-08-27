@@ -38,6 +38,10 @@ Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function
         });
     });
 
+    Route::group(['prefix' => 'customer/order/payment',  'middleware' => ['auth:api']], function () {
+        Route::post('place', 'OrderController@place');
+    });
+
     Route::group(['prefix' => 'delivery-man', 'middleware' => 'deliveryman_is_active'], function () {
         Route::get('profile', 'DeliverymanController@get_profile');
         Route::get('current-orders', 'DeliverymanController@get_current_orders');
@@ -108,6 +112,9 @@ Route::group(['namespace' => 'Api\V1', 'middleware' => 'localization'], function
         Route::get('childes/{category_id}', 'CategoryController@get_childes');
         Route::get('products/{category_id}', 'CategoryController@get_products')->middleware('branch_adder');
         Route::get('products/{category_id}/all', 'CategoryController@get_all_products')->middleware('branch_adder');
+    });
+
+    Route::group(['prefix' => 'customer', 'middleware' => ['auth:api', 'is_active']], function () {
     });
 
     Route::group(['prefix' => 'customer', 'middleware' => ['auth:api', 'is_active']], function () {

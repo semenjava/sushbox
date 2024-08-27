@@ -31,7 +31,7 @@
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_MAP_KEY_HERE"/>
+            android:value="AIzaSyC7QuchAqsaadH7MEtM3OCoJJOLF5kGvro"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -60,6 +60,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="myapp" android:host="payment" />
             </intent-filter>
             <intent-filter>
                 <action android:name="FLUTTER_NOTIFICATION_CLICK" />

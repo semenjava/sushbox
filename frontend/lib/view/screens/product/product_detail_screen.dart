@@ -1,12 +1,12 @@
-// lib/view/screens/product/product_detail_screen.dart
-
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Добавьте этот импорт для работы с SVG
 import 'package:sushibox/localization/language_constrants.dart';
 import 'package:sushibox/data/model/response/product_model.dart';
 import 'package:sushibox/data/model/response/cart_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:sushibox/utill/app_constants.dart';
+import 'package:sushibox/view/screens/cart/cart_screen.dart'; // Убедитесь, что импортируете ваш экран корзины
 
 class ProductDetailScreen extends StatelessWidget {
   final Product product;
@@ -19,6 +19,20 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(product.name),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => CartScreen(),
+              ));
+            },
+            icon: SvgPicture.network(
+              '${AppConstants.baseUrl}/assets/img/cart.svg', // URL вашей иконки корзины в формате SVG
+              width: 24,
+              height: 24,
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -61,6 +75,10 @@ class ProductDetailScreen extends StatelessWidget {
                       onPressed: () {
                         addToCart(context, product);
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFC6A87D),
+                        foregroundColor: Colors.white,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,

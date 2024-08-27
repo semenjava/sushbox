@@ -1,4 +1,8 @@
 {
+  "enter_address": "Enter Address",
+  "checkout": "Checkout",
+  "product_added": "Product added to cart",
+  "place_order": "Place an Order",
   "clear_cart": "Clear Cart",
   "add_to_cart": "Add to Cart",
   "added_to_cart": "has been added to cart",
