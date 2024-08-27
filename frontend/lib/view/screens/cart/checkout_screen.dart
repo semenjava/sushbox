@@ -198,6 +198,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           _showRegistrationForm = false;
                         });
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFC6A87D),
+                        foregroundColor: Colors.white,
+                      ),
                       child: Text(getTranslated('login', context)!),
                     ),
                     SizedBox(width: 16),
@@ -207,6 +211,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           _showRegistrationForm = true;
                         });
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFC6A87D),
+                        foregroundColor: Colors.white,
+                      ),
                       child: Text(getTranslated('register', context)!),
                     ),
                   ],
@@ -302,6 +310,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             onPressed: () {
               _loginUser();
             },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFC6A87D),
+                foregroundColor: Colors.white,
+              ),
             child: Text(getTranslated('login', context)!),
           ),
         ],
