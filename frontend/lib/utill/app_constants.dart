@@ -5,7 +5,7 @@ class AppConstants {
   static const String appName = '';
   static const double appVersion = 10.2;
   static const String baseUrl =
-      'http://10.0.2.2:8000'; //'https://app.sushi-box.gr'; //'http://10.0.2.2:8000';
+      'https://app.sushi-box.gr'; //'https://app.sushi-box.gr'; //'http://10.0.2.2:8000';
   static const String profileUri = '/api/v1/delivery-man/profile?token=';
   static const String configUri = '/api/v1/config';
   static const String bannerUri = '/api/v1/banners';

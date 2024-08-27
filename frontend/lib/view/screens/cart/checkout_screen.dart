@@ -257,6 +257,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               onPressed: () {
                 _placeOrder();
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFC6A87D),
+                foregroundColor: Colors.white,
+              ),
               child: Text(getTranslated('place_order', context)!),
             ),
           ],
