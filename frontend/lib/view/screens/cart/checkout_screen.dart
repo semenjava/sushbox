@@ -311,9 +311,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               _loginUser();
             },
             style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFC6A87D),
-                foregroundColor: Colors.white,
-              ),
+              backgroundColor: Color(0xFFC6A87D),
+              foregroundColor: Colors.white,
+            ),
             child: Text(getTranslated('login', context)!),
           ),
         ],
@@ -538,7 +538,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         String redirectUrl = data['redirect_url'];
 
         if (await canLaunch(redirectUrl)) {
-          await launch(redirectUrl); // Открываем URL в браузере
+          await launch(
+            redirectUrl,
+            forceWebView: false, // Попробуйте принудительное открытие в WebView
+            forceSafariVC: false, // Для iOS
+          );
         } else {
           throw 'Could not launch $redirectUrl';
         }
