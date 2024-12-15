@@ -1,6 +1,11 @@
 {
-    "clear_cart": "Очистка корзины",
- "added_to_cart": "добавлен в корзину",
+ "enter_address": "Введите адрес",
+ "checkout": "Checkout",
+ "product_added": "Добавлен в корзину",
+ "place_order": "Оформить заказ",
+ "clear_cart": "Очистка корзины",
+ "add_to_cart": "Добавлен в корзину",
+ "added_to_cart": "Добавлен в корзину",
  "cart_empty": "Ваша корзина пуста",
  "product_removed": "Товар удален из корзины",
  "search_hint": "Введите название продукта",

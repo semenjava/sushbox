@@ -58,5 +58,10 @@ class AppConstants {
         languageName: 'Greece',
         countryCode: 'GR',
         languageCode: 'el'),
+    LanguageModel(
+        imageUrl: Images.greece,
+        languageName: 'Russian',
+        countryCode: 'RU',
+        languageCode: 'ru'),
   ];
 }
