@@ -47,7 +47,7 @@ class CustomerAuthController extends Controller
             'l_name' => 'required',
             'email' => 'required|unique:users',
             'phone' => 'required|unique:users|min:5|max:20',
-            'password' => 'required|min:6',
+            'password' => 'required|min:4',
         ], [
             'f_name.required' => translate('The first name field is required.'),
             'l_name.required' => translate('The last name field is required.'),
@@ -202,7 +202,7 @@ class CustomerAuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'phone' => 'required|min:5|max:20',
-            'password' => 'required|min:6',
+            'password' => 'required|min:4',
         ]);
 
         if ($validator->fails()) {

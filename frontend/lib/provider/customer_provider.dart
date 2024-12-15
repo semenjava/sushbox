@@ -71,7 +71,7 @@ class CustomerProvider with ChangeNotifier {
     }
   }
 
-  Future<void> register(String f_name, String l_name, String email,
+  Future<String?> register(String f_name, String l_name, String email,
       String phone, String password) async {
     try {
       final response = await dioClient.post(
@@ -95,11 +95,12 @@ class CustomerProvider with ChangeNotifier {
         await _fetchCustomerData();
         notifyListeners();
         await _saveUserData();
+        return null;
       } else {
-        throw Exception('Failed to register');
+        return 'Failed to register';
       }
     } on DioException catch (e) {
-      throw Exception('Failed to register: ${_getDioErrorMessage(e)}');
+      return _getDioErrorMessage(e);
     }
   }
 
@@ -194,19 +195,28 @@ class CustomerProvider with ChangeNotifier {
   }
 
   String _getDioErrorMessage(DioException e) {
+    if (e.response != null && e.response?.data != null) {
+      if (e.response!.data['errors'] != null) {
+        return (e.response!.data['errors'] as List)
+            .map((err) => err['message'])
+            .join('\n');
+      } else if (e.response!.data['message'] != null) {
+        return e.response!.data['message'];
+      }
+    }
     switch (e.response?.statusCode) {
       case 400:
-        return 'Bad Request: ${e.response?.data['message'] ?? 'Invalid input'}';
+        return 'Bad Request: Invalid input';
       case 401:
-        return 'Unauthorized: ${e.response?.data['message'] ?? 'Invalid credentials'}';
+        return 'Unauthorized: Invalid credentials';
       case 403:
-        return 'Forbidden: ${e.response?.data['message'] ?? 'Access denied'}';
+        return 'Forbidden: Access denied';
       case 404:
-        return 'Not Found: ${e.response?.data['message'] ?? 'Resource not found'}';
+        return 'Not Found: Resource not found';
       case 500:
-        return 'Server Error: ${e.response?.data['message'] ?? 'An error occurred on the server'}';
+        return 'Server Error: An error occurred on the server';
       default:
-        return 'Unexpected Error: ${e.response?.data['message'] ?? 'An unexpected error occurred'}';
+        return 'Unexpected Error: ${e.message}';
     }
   }
 }

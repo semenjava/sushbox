@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sushibox/provider/customer_provider.dart'; // Импорт CustomerProvider
 import 'package:sushibox/view/screens/auth/login_screen.dart';
 import 'package:sushibox/view/screens/profile/profile_screen.dart';
+import 'package:dio/dio.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -53,21 +54,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                try {
-                  await customerProvider.register(
-                    _firstNameController.text,
-                    _lastNameController.text,
-                    _emailController.text,
-                    _phoneController.text,
-                    _passwordController.text,
-                  );
+                final errorMessage = await customerProvider.register(
+                  _firstNameController.text,
+                  _lastNameController.text,
+                  _emailController.text,
+                  _phoneController.text,
+                  _passwordController.text,
+                );
 
+                if (errorMessage == null) {
+                  // Регистрация успешна
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (_) => ProfileScreen()),
                   );
-                } catch (e) {
+                } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Registration failed')),
+                    SnackBar(content: Text(errorMessage)),
                   );
                 }
               },
